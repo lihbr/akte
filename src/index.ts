@@ -1,7 +1,4 @@
-export {
-	defineAkteConfig,
-	type AkteConfig,
-} from "./defineAkteConfig";
+export { defineAkteConfig, type AkteConfig } from "./defineAkteConfig";
 
 export { defineAkteFile, type AkteFile } from "./defineAkteFile";
 
