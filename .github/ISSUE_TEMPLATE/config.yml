@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 🤔 Question
+    url: https://github.com/lihbr/akte/discussions
+    about: Ask a question about the package. You will usually get support there more quickly!
+  - name: 🐦 Lucie's Twitter
+    url: https://twitter.com/li_hbr
+    about: Get in touch with me about this package, or anything else 🤷‍♀️

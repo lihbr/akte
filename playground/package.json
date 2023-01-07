@@ -1,0 +1,12 @@
+{
+	"name": "akte.playground",
+	"version": "0.0.0",
+	"private": true,
+	"dependencies": {
+		"@prismicio/client": "7.0.0-alpha.0",
+		"node-fetch": "^3.3.0"
+	},
+	"devDependencies": {
+		"akte": "0.0.0"
+	}
+}
