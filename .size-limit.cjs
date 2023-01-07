@@ -2,4 +2,7 @@ const pkg = require("./package.json");
 
 module.exports = [pkg.module, pkg.main]
 	.filter(Boolean)
-	.map((path) => ({ path }));
+	.map((path) => ({
+		path,
+		ignore: ["node:*"]
+	}));
