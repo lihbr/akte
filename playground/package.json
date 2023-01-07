@@ -7,6 +7,6 @@
 		"node-fetch": "^3.3.0"
 	},
 	"devDependencies": {
-		"akte": "0.0.0"
+		"akte": "0.0.1"
 	}
 }
