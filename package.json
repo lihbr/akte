@@ -44,7 +44,8 @@
 		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config": "0.34.0",
+		"@size-limit/preset-small-lib": "^8.1.0",
+		"@antfu/eslint-config": "^0.34.0",
 		"@vitest/coverage-c8": "^0.26.3",
 		"eslint": "^8.31.0",
 		"eslint-config-prettier": "^8.6.0",
