@@ -13,6 +13,7 @@
 	"license": "MIT",
 	"author": "Lucie Haberer <hello@lihbr.com> (https://lihbr.com)",
 	"type": "module",
+	"sideEffects": false,
 	"exports": {
 		".": {
 			"require": "./dist/index.cjs",
@@ -81,6 +82,14 @@
 		"vite": "^4.0.4",
 		"vite-plugin-sdk": "^0.1.0",
 		"vitest": "^0.26.3"
+	},
+	"peerDependencies": {
+		"vite": "^4.0.0"
+	},
+	"peerDependenciesMeta": {
+		"vite": {
+			"optional": true
+		}
 	},
 	"workspaces": [
 		"playground"
