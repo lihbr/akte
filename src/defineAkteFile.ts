@@ -26,25 +26,30 @@ export const defineAkteFile = <TGlobalData, TData = Empty>(): {
 } => {
 	return {
 		from: (definition) => {
-			type FileDataFn = Required<typeof definition>["data"];
+			type _FileDataFn = Required<typeof definition>["data"];
+
+			// Allows single file to still get build without any data function
+			const data = (() => {}) as unknown as _FileDataFn;
 
 			const bulkData: FilesBulkDataFn<
-				Parameters<FileDataFn>[0]["globalData"],
-				Awaited<ReturnType<FileDataFn>>
+				Parameters<_FileDataFn>[0]["globalData"],
+				Awaited<ReturnType<_FileDataFn>>
 			> = async (args) => {
 				if (definition.data) {
 					return {
 						[definition.path]: await definition.data({
+							path: definition.path,
 							params: {},
 							globalData: args.globalData,
 						}),
 					};
 				}
 
-				return { [definition.path]: {} as Awaited<ReturnType<FileDataFn>> };
+				return { [definition.path]: {} as Awaited<ReturnType<_FileDataFn>> };
 			};
 
 			return new AkteFiles({
+				data,
 				...definition,
 				bulkData,
 			});

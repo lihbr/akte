@@ -1,9 +1,12 @@
 import { performance } from "node:perf_hooks";
 import { resolve } from "node:path";
+import { existsSync } from "node:fs";
 
 import type { Plugin } from "vite";
 
 import { type Options } from "../types";
+
+let isServerRestart = false;
 
 export const buildPlugin = async (
 	options: Required<Options>,
@@ -19,7 +22,26 @@ export const buildPlugin = async (
 				return;
 			}
 
+			console.log("config");
+
 			const cacheDirPath = resolve(userConfig.root || ".", options.cacheDir);
+
+			// Don't build full app directly in dev mode
+			const indexHTMLPath = resolve(cacheDirPath, "index.html");
+			if (
+				env.mode === "development" &&
+				env.command === "serve" &&
+				existsSync(indexHTMLPath) &&
+				isServerRestart
+			) {
+				userConfig.build.rollupOptions.input = {
+					"index.html": indexHTMLPath,
+				};
+
+				return;
+			}
+
+			console.log("config full");
 
 			const then = performance.now();
 			const filePaths = await options.app.buildAll({
@@ -43,9 +65,9 @@ export const buildPlugin = async (
 				}
 			}
 
-			userConfig.build ||= {};
-			userConfig.build.rollupOptions ||= {};
 			userConfig.build.rollupOptions.input = input;
+
+			isServerRestart = true;
 
 			return userConfig;
 		},

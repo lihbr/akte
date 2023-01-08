@@ -1,3 +1,4 @@
+import { NotFoundError } from "./errors";
 import { pathToFilePath } from "./lib/pathToFilePath";
 import { type Awaitable } from "./types";
 
@@ -17,6 +18,7 @@ export type FilesDataFn<
 	TParams extends string[],
 	TData,
 > = (context: {
+	path: string;
 	params: Record<TParams[number], string>;
 	globalData: TGlobalData;
 }) => Awaitable<TData>;
@@ -66,7 +68,7 @@ export class AkteFiles<
 		params: Record<TParams[number], string>;
 		globalData: TGlobalData;
 	}): Promise<string> {
-		const data = (await this.definition.data?.(args)) as TData;
+		const data = await this.getDataPromise(args);
 
 		return this.definition.render({
 			path: args.path,
@@ -122,15 +124,37 @@ export class AkteFiles<
 	protected getDataPromise: FilesDataFn<TGlobalData, TParams, TData> = (
 		context,
 	) => {
-		const key = JSON.stringify(context.params);
+		const key = JSON.stringify(context.path);
 
 		const maybePromise = this._dataPromiseMap.get(key);
 		if (maybePromise) {
 			return maybePromise;
 		}
 
-		const promise =
-			this.definition.data?.(context) || (undefined as Awaitable<TData>);
+		let promise: Awaitable<TData>;
+		if (this.definition.data) {
+			promise = this.definition.data(context);
+		} else if (this.definition.bulkData) {
+			const dataFromBulkData = async (path: string): Promise<TData> => {
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				const bulkData = await this.definition.bulkData!({
+					globalData: context.globalData,
+				});
+
+				if (path in bulkData) {
+					return bulkData[path];
+				}
+
+				throw new NotFoundError(path);
+			};
+
+			promise = dataFromBulkData(context.path);
+		} else {
+			throw new Error(
+				`Cannot render file for path \`${context.path}\`, no \`data\` or \`bulkData\` function available`,
+			);
+		}
+
 		this._dataPromiseMap.set(key, promise);
 
 		return promise;
