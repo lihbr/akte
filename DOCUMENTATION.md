@@ -6,6 +6,12 @@
 
 ## Installation
 
+WIP
+
 ## Usage
 
+WIP
+
 ## API
+
+WIP

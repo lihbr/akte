@@ -1,9 +1,7 @@
-export const pathToFilePath = (args: {
-	path: string;
-	extension?: `.${string}`;
-}): string => {
-	const path = args.path.endsWith("/") ? `${args.path}index` : args.path;
-	const extension = args.extension || ".html";
+export const pathToFilePath = (path: string): string => {
+	if (/\.(.*)$/.test(path)) {
+		return path;
+	}
 
-	return `${path}${extension}`;
+	return path.endsWith("/") ? `${path}index.html` : `${path}.html`;
 };

@@ -4,16 +4,18 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview"
+		"dev": "cross-env DEBUG=akte:* vite",
+		"build": "cross-env DEBUG=akte:* vite build",
+		"preview": "cross-env DEBUG=akte:* vite preview"
 	},
 	"dependencies": {
-		"@prismicio/client": "7.0.0-alpha.0",
+		"@prismicio/client": "^7.0.0-alpha.0",
 		"node-fetch": "^3.3.0"
 	},
 	"devDependencies": {
-		"akte": "0.0.1",
+		"akte": "^0.0.1",
+		"cross-env": "^7.0.3",
+		"tsx": "^3.12.1",
 		"vite": "^4.0.4"
 	}
 }

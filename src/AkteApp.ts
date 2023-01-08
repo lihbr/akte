@@ -1,13 +1,16 @@
-import { performance } from "node:perf_hooks";
 import { dirname, join, resolve } from "node:path";
 import { mkdir, writeFile } from "node:fs/promises";
 
-import { type RadixRouter, createRouter } from "radix3";
+import { type MatchedRoute, type RadixRouter, createRouter } from "radix3";
 
-import { name as pkgName, version as pkgVersion } from "../package.json";
 import type { AkteFiles } from "./AkteFiles";
 import type { Awaitable, GlobalDataFn } from "./types";
 import { NotFoundError } from "./errors";
+import { runCLI } from "./runCLI";
+
+import { createDebugger } from "./lib/createDebugger";
+import { pathToRouterPath } from "./lib/pathToRouterPath";
+import { isCLI } from "./lib/isCLI";
 
 export type Config<TGlobalData> = {
 	files: AkteFiles<TGlobalData>[];
@@ -17,92 +20,74 @@ export type Config<TGlobalData> = {
 	};
 };
 
+const debug = createDebugger("akte:app");
+const debugWrite = createDebugger("akte:app:write");
+const debugRender = createDebugger("akte:app:render");
+const debugRouter = createDebugger("akte:app:router");
+const debugCache = createDebugger("akte:app:cache");
+
 export class AkteApp<TGlobalData = unknown> {
 	protected config: Config<TGlobalData>;
-	protected isCLI: boolean;
 
-	get pkg(): { name: string; version: string } {
+	constructor(config: Config<TGlobalData>) {
+		this.config = config;
+
+		debug("created with %o files", this.config.files.length);
+
+		if (isCLI) {
+			runCLI(this as AkteApp);
+		}
+	}
+
+	lookup(path: string): MatchedRoute<{
+		file: AkteFiles<TGlobalData>;
+	}> & { path: string } {
+		const pathWithExtension = pathToRouterPath(path);
+		debugRouter("looking up %o (%o)", path, pathWithExtension);
+
+		const maybeMatch = this.getRouter().lookup(pathWithExtension);
+
+		if (!maybeMatch || !maybeMatch.file) {
+			debugRouter("not found %o", path);
+			throw new NotFoundError(path);
+		}
+
 		return {
-			name: pkgName,
-			version: pkgVersion,
+			...maybeMatch,
+			path,
 		};
 	}
 
-	constructor(config: Config<TGlobalData>) {
-		console.log("app constructor");
-		this.config = config;
-
-		const [_runner, filePath, ...commandsAndFlags] = process.argv;
-
-		const file = filePath.replaceAll("\\", "/").split("/").pop() || "";
-		this.isCLI = file.includes("akte.app") || file.includes("akte.config");
-
-		if (this.isCLI) {
-			this.runAsCLI(commandsAndFlags);
-		}
-	}
-
-	async runAsCLI(commandsAndFlags: string[]): Promise<void> {
-		process.title = "Akte CLI";
-
-		if (commandsAndFlags[0] === "--") {
-			commandsAndFlags.shift();
-		}
-
-		// Global flags
-		if (
-			commandsAndFlags.includes("--help") ||
-			commandsAndFlags.includes("-h") ||
-			commandsAndFlags.length === 0
-		) {
-			this.cli.help();
-
-			return process.exit(0);
-		} else if (
-			commandsAndFlags.includes("--version") ||
-			commandsAndFlags.includes("-v")
-		) {
-			this.cli.version();
-
-			return process.exit(0);
-		}
-
-		// Commands
-		switch (commandsAndFlags[0]) {
-			case "build":
-				await this.cli.build();
-
-				return process.exit(0);
-
-			default:
-				this.cli.error(
-					`Akte → Unknown command \`${commandsAndFlags[0]}\`, use \`--help\` flag for manual`,
-				);
-
-				process.exit(2);
-		}
-	}
-
-	async render(path: string): Promise<string> {
-		const match = this.getRouter().lookup(path);
-
-		if (!match) {
-			throw new NotFoundError(path);
-		}
+	async render(
+		match: MatchedRoute<{
+			file: AkteFiles<TGlobalData>;
+		}> & { path: string },
+	): Promise<string> {
+		debugRender("rendering %o...", match.path);
 
 		const params: Record<string, string> = match.params || {};
 		const globalData = await this.getGlobalDataPromise();
 
 		try {
-			return match.file.render({ path, params, globalData });
-		} catch (error) {
-			console.error(error);
+			const content = match.file.render({
+				path: match.path,
+				params,
+				globalData,
+			});
 
-			throw new NotFoundError(path);
+			debugRender("rendered %o", match.path);
+
+			return content;
+		} catch (error) {
+			debugRender.error(error);
+
+			throw new NotFoundError(match.path);
 		}
 	}
 
 	async renderAll(): Promise<Record<string, string>> {
+		debugRender("rendering all files...");
+
 		const globalData = await this.getGlobalDataPromise();
 
 		const renderAll = async (
@@ -113,7 +98,7 @@ export class AkteApp<TGlobalData = unknown> {
 
 				return files;
 			} catch (error) {
-				console.error("Akte → Failed to build %o\n", akteFiles.identifier);
+				debug.error("Akte → Failed to build %o\n", akteFiles.path);
 
 				throw error;
 			}
@@ -130,7 +115,7 @@ export class AkteApp<TGlobalData = unknown> {
 		for (const rawFiles of rawFilesArray) {
 			for (const path in rawFiles) {
 				if (path in files) {
-					console.warn(
+					debug.warn(
 						"  Multiple files built %o, only the first one is preserved",
 						path,
 					);
@@ -141,6 +126,12 @@ export class AkteApp<TGlobalData = unknown> {
 			}
 		}
 
+		const rendered = Object.keys(files).length;
+		debugRender(
+			`done, %o ${rendered > 1 ? "files" : "file"} rendered`,
+			rendered,
+		);
+
 		return files;
 	}
 
@@ -148,6 +139,7 @@ export class AkteApp<TGlobalData = unknown> {
 		outDir?: string;
 		files: Record<string, string>;
 	}): Promise<void> {
+		debugWrite("writing all files...");
 		const outDir = args.outDir ?? this.config.build?.outDir ?? "dist";
 		const outDirPath = resolve(outDir);
 
@@ -159,12 +151,13 @@ export class AkteApp<TGlobalData = unknown> {
 				await mkdir(fileDir, { recursive: true });
 				await writeFile(filePath, content, "utf-8");
 			} catch (error) {
-				console.error("Akte → Failed to write %o\n", path);
+				debug.error("Akte → Failed to write %o\n", path);
 
 				throw error;
 			}
 
-			this.cli.log("  %o", path);
+			debugWrite("%o", path);
+			debugWrite.log("  %o", path);
 		};
 
 		const promises: Promise<void>[] = [];
@@ -173,6 +166,11 @@ export class AkteApp<TGlobalData = unknown> {
 		}
 
 		await Promise.all(promises);
+
+		debugWrite(
+			`done, %o ${promises.length > 1 ? "files" : "file"} written`,
+			promises.length,
+		);
 	}
 
 	async buildAll(args?: { outDir?: string }): Promise<string[]> {
@@ -182,52 +180,9 @@ export class AkteApp<TGlobalData = unknown> {
 		return Object.keys(files);
 	}
 
-	protected cli = {
-		help: (): void => {
-			this.cli.log(`
-  Akte CLI
-
-  DOCUMENTATION
-    https://akte.lihbr.com
-
-  VERSION
-    ${pkgName}@${pkgVersion}
-
-  USAGE
-    $ npx tsx akte.config.ts
-
-  COMMANDS
-    build          Build Akte to file system
-
-  OPTIONS
-    --help, -h     Display CLI help
-    --version, -v  Display CLI version
-`);
-		},
-		version: (): void => {
-			this.cli.log(`${this.pkg.name}@${this.pkg.version}`);
-		},
-		build: async (): Promise<void> => {
-			this.cli.log("\nAkte → Beginning build...\n");
-
-			await this.buildAll();
-
-			const buildTime = `${Math.ceil(performance.now())}ms`;
-			this.cli.log("\nAkte → Built in %o", buildTime);
-		},
-		log: ((message, ...optionalParams) => {
-			// eslint-disable-next-line no-console
-			this.isCLI && console.log(message, ...optionalParams);
-		}) as typeof console.log,
-		warn: ((message, ...optionalParams) => {
-			this.isCLI && console.warn(message, ...optionalParams);
-		}) as typeof console.warn,
-		error: ((message, ...optionalParams) => {
-			this.isCLI && console.error(message, ...optionalParams);
-		}) as typeof console.error,
-	};
-
 	clearCache(alsoClearFileCache = false): void {
+		debugCache("clearing...");
+
 		this._globalDataPromise = undefined;
 		this._router = undefined;
 
@@ -236,27 +191,65 @@ export class AkteApp<TGlobalData = unknown> {
 				file.clearCache();
 			}
 		}
+
+		debugCache("cleared");
 	}
 
 	private _globalDataPromise: Awaitable<TGlobalData> | undefined;
 	protected getGlobalDataPromise(): Awaitable<TGlobalData> {
 		if (!this._globalDataPromise) {
-			this._globalDataPromise = this.config.globalData();
+			debugCache("retrieving global data...");
+			const globalDataPromise = this.config.globalData();
+
+			if (globalDataPromise instanceof Promise) {
+				globalDataPromise.then(() => {
+					debugCache("retrieved global data");
+				});
+			} else {
+				debugCache("retrieved global data");
+			}
+
+			this._globalDataPromise = globalDataPromise;
+		} else {
+			debugCache("using cached global data");
 		}
 
 		return this._globalDataPromise;
 	}
 
-	private _router: RadixRouter<{ file: AkteFiles<TGlobalData> }> | undefined;
-	protected getRouter(): RadixRouter<{ file: AkteFiles<TGlobalData> }> {
+	private _router:
+		| RadixRouter<{
+				file: AkteFiles<TGlobalData>;
+		  }>
+		| undefined;
+
+	protected getRouter(): RadixRouter<{
+		file: AkteFiles<TGlobalData>;
+	}> {
 		if (!this._router) {
+			debugCache("creating router...");
 			const router = createRouter<{ file: AkteFiles<TGlobalData> }>();
 
 			for (const file of this.config.files) {
-				router.insert(file.path, { file });
+				const path = pathToRouterPath(file.path);
+				router.insert(pathToRouterPath(file.path), { file });
+				debugRouter("registered %o", path);
+				if (file.path.endsWith("/**")) {
+					const catchAllPath = pathToRouterPath(
+						file.path.replace(/\/\*\*$/, ""),
+					);
+					router.insert(catchAllPath, {
+						file,
+					});
+					debugRouter("registered %o", catchAllPath);
+					debugCache(pathToRouterPath(file.path.replace(/\/\*\*$/, "")));
+				}
 			}
 
 			this._router = router;
+			debugCache("created router");
+		} else {
+			debugCache("using cached router");
 		}
 
 		return this._router;

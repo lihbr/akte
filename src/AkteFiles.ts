@@ -1,6 +1,8 @@
 import { NotFoundError } from "./errors";
-import { pathToFilePath } from "./lib/pathToFilePath";
 import { type Awaitable } from "./types";
+
+import { createDebugger } from "./lib/createDebugger";
+import { pathToFilePath } from "./lib/pathToFilePath";
 
 type Path<
 	TParams extends string[],
@@ -29,7 +31,6 @@ export type FilesBulkDataFn<TGlobalData, TData> = (context: {
 
 export type FilesDefinition<TGlobalData, TParams extends string[], TData> = {
 	path: Path<TParams>;
-	extension?: `.${string}`;
 	data?: FilesDataFn<TGlobalData, TParams, TData>;
 	bulkData?: FilesBulkDataFn<TGlobalData, TData>;
 	render: (context: {
@@ -38,6 +39,10 @@ export type FilesDefinition<TGlobalData, TParams extends string[], TData> = {
 		data: TData;
 	}) => Awaitable<string>;
 };
+
+const debug = createDebugger("akte:files");
+const debugRender = createDebugger("akte:files:render");
+const debugCache = createDebugger("akte:files:cache");
 
 export class AkteFiles<
 	TGlobalData = unknown,
@@ -48,19 +53,13 @@ export class AkteFiles<
 	protected definition: FilesDefinition<TGlobalData, TParams, TData>;
 
 	get path(): string {
-		if (this.definition.extension && this.definition.extension !== ".html") {
-			return `${this.definition.path}${this.definition.extension}`;
-		}
-
 		return this.definition.path;
-	}
-
-	get identifier(): string {
-		return pathToFilePath(this.definition);
 	}
 
 	constructor(definition: FilesDefinition<TGlobalData, TParams, TData>) {
 		this.definition = definition;
+
+		debug("created %o", this.path);
 	}
 
 	async render(args: {
@@ -81,8 +80,12 @@ export class AkteFiles<
 		globalData: TGlobalData;
 	}): Promise<Record<string, string>> {
 		if (!this.definition.bulkData) {
+			debugRender("no files to render %o", this.path);
+
 			return {};
 		}
+
+		debugRender("rendering files... %o", this.path);
 
 		const bulkData = await this.getBulkDataPromise(args);
 
@@ -96,10 +99,9 @@ export class AkteFiles<
 				data,
 			});
 
-			return [
-				pathToFilePath({ path, extension: this.definition.extension }),
-				content,
-			];
+			debugRender("rendered %o", path);
+
+			return [pathToFilePath(path), content];
 		};
 
 		const promises: Awaitable<[string, string]>[] = [];
@@ -110,6 +112,12 @@ export class AkteFiles<
 		}
 
 		const fileEntries = await Promise.all(Object.values(promises));
+
+		debugRender(
+			`rendered %o ${fileEntries.length > 1 ? "files" : "file"} %o`,
+			fileEntries.length,
+			this.path,
+		);
 
 		return Object.fromEntries(fileEntries);
 	}
@@ -124,12 +132,14 @@ export class AkteFiles<
 	protected getDataPromise: FilesDataFn<TGlobalData, TParams, TData> = (
 		context,
 	) => {
-		const key = JSON.stringify(context.path);
-
-		const maybePromise = this._dataPromiseMap.get(key);
+		const maybePromise = this._dataPromiseMap.get(context.path);
 		if (maybePromise) {
+			debugCache("using cached data %o", context.path);
+
 			return maybePromise;
 		}
+
+		debugCache("retrieving data... %o", context.path);
 
 		let promise: Awaitable<TData>;
 		if (this.definition.data) {
@@ -155,7 +165,15 @@ export class AkteFiles<
 			);
 		}
 
-		this._dataPromiseMap.set(key, promise);
+		if (promise instanceof Promise) {
+			promise.then(() => {
+				debugCache("retrievd data %o", context.path);
+			});
+		} else {
+			debugCache("retrievd data %o", context.path);
+		}
+
+		this._dataPromiseMap.set(context.path, promise);
 
 		return promise;
 	};
@@ -166,9 +184,23 @@ export class AkteFiles<
 		context,
 	) => {
 		if (!this._bulkDataPromise) {
-			this._bulkDataPromise =
+			debugCache("retrieving bulk data... %o", this.path);
+
+			const bulkDataPromise =
 				this.definition.bulkData?.(context) ||
 				({} as Awaitable<Record<string, TData>>);
+
+			if (bulkDataPromise instanceof Promise) {
+				bulkDataPromise.then(() => {
+					debugCache("retrieved bulk data %o", this.path);
+				});
+			} else {
+				debugCache("retrieved bulk data %o", this.path);
+			}
+
+			this._bulkDataPromise = bulkDataPromise;
+		} else {
+			debugCache("using cached bulk data %o", this.path);
 		}
 
 		return this._bulkDataPromise;
