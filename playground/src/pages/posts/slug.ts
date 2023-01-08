@@ -2,6 +2,7 @@ import { type PrismicDocument, createClient } from "@prismicio/client";
 import fetch from "node-fetch";
 
 import { defineAkteFiles } from "akte";
+import { basic } from "../../layouts/basic";
 
 const client = createClient("lihbr", {
 	routes: [
@@ -28,6 +29,8 @@ export const postsSlug = defineAkteFiles<unknown, ["slug"]>().from({
 		return records;
 	},
 	render: (context) => {
-		return /* html */ `<main>${context.data.uid}</main>`;
+		const slot = /* html */ `<main>${context.data.uid}</main>`;
+
+		return basic(slot);
 	},
 });
