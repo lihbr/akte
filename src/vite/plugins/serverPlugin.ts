@@ -4,7 +4,7 @@ import { writeFile } from "node:fs/promises";
 import type { Plugin } from "vite";
 import httpProxy from "http-proxy";
 
-import { type Options } from "../types";
+import type { ResolvedOptions } from "../types";
 import { NotFoundError } from "../../errors";
 import { pathToFilePath } from "../../lib/pathToFilePath";
 import { createDebugger } from "../../lib/createDebugger";
@@ -12,7 +12,7 @@ import { createDebugger } from "../../lib/createDebugger";
 const debug = createDebugger("akte:vite:server", true);
 
 export const serverPlugin = <TGlobalData>(
-	options: Required<Options<TGlobalData>>,
+	options: ResolvedOptions<TGlobalData>,
 ): Plugin | null => {
 	debug("plugin registered");
 

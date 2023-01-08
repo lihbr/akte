@@ -4,8 +4,9 @@ import { copyFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 import type { Plugin } from "vite";
+import { minify as _minify } from "html-minifier-terser";
 
-import { type Options } from "../types";
+import type { ResolvedOptions } from "../types";
 import { pkg } from "../../lib/pkg";
 import { createDebugger } from "../../lib/createDebugger";
 
@@ -14,7 +15,7 @@ let isServerRestart = false;
 const debug = createDebugger("akte:vite:build", true);
 
 export const buildPlugin = <TGlobalData>(
-	options: Required<Options<TGlobalData>>,
+	options: ResolvedOptions<TGlobalData>,
 ): Plugin | null => {
 	debug("plugin registered");
 
@@ -89,8 +90,24 @@ export const buildPlugin = <TGlobalData>(
 		configResolved(config) {
 			outDir = resolve(config.root, config.build.outDir);
 		},
-		generateBundle(_, outputBundle) {
-			debug("fixing html file bundle paths...");
+		async generateBundle(_, outputBundle) {
+			debug("updating akte bundle...");
+
+			const operations = ["fixed html file paths"];
+			if (options.minifyHTML) {
+				operations.push("minified html");
+			}
+
+			const minify = async (partialBundle: {
+				source: string | Uint8Array;
+			}): Promise<void> => {
+				partialBundle.source = await _minify(
+					partialBundle.source as string,
+					options.minifyHTML || {},
+				);
+			};
+
+			const promises: Promise<void>[] = [];
 			for (const bundle of Object.values(outputBundle)) {
 				if (
 					bundle.type === "asset" &&
@@ -104,9 +121,13 @@ export const buildPlugin = <TGlobalData>(
 						new RegExp(`^${options.cacheDir}\\/?`),
 						"",
 					);
+
+					if (options.minifyHTML) {
+						promises.push(minify(bundle));
+					}
 				}
 			}
-			debug("fixed html file bundle paths...");
+			debug(`updated akte bundle: ${operations.join(", ")}`);
 		},
 		async writeBundle() {
 			const filePaths = relativeFilePaths.filter(
