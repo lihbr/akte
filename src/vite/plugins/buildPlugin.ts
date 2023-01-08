@@ -13,9 +13,9 @@ let isServerRestart = false;
 
 const debug = createDebugger("akte:vite:build", true);
 
-export const buildPlugin = async (
-	options: Required<Options>,
-): Promise<Plugin | null> => {
+export const buildPlugin = <TGlobalData>(
+	options: Required<Options<TGlobalData>>,
+): Plugin | null => {
 	debug("plugin registered");
 
 	let cacheDirPath = resolve(options.cacheDir);

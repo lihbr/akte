@@ -11,7 +11,9 @@ import { createDebugger } from "../../lib/createDebugger";
 
 const debug = createDebugger("akte:vite:server", true);
 
-export const serverPlugin = (options: Required<Options>): Plugin | null => {
+export const serverPlugin = <TGlobalData>(
+	options: Required<Options<TGlobalData>>,
+): Plugin | null => {
 	debug("plugin registered");
 
 	let cacheDirPath = resolve(options.cacheDir);

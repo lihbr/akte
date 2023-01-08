@@ -11,10 +11,12 @@ const DEFAULT_OPTIONS = {
 
 const debug = createDebugger("akte:vite", true);
 
-export const aktePlugin = (rawOptions: Options): PluginOption[] => {
+export const aktePlugin = <TGlobalData>(
+	rawOptions: Options<TGlobalData>,
+): PluginOption[] => {
 	debug("plugin registered");
 
-	const options: Required<Options> = {
+	const options: Required<Options<TGlobalData>> = {
 		...DEFAULT_OPTIONS,
 		...rawOptions,
 	};
