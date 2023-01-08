@@ -1,6 +1,7 @@
 # .gitignore copy
 
 # custom
+.akte
 dist
 examples/**/package-lock.json
 

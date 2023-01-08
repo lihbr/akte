@@ -2,11 +2,18 @@
 	"name": "akte.playground",
 	"version": "0.0.0",
 	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
 	"dependencies": {
 		"@prismicio/client": "7.0.0-alpha.0",
 		"node-fetch": "^3.3.0"
 	},
 	"devDependencies": {
-		"akte": "0.0.1"
+		"akte": "0.0.1",
+		"vite": "^4.0.4"
 	}
 }

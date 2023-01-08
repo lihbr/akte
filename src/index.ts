@@ -1,5 +1,6 @@
-export { defineAkteConfig, type AkteConfig } from "./defineAkteConfig";
+export type { Config, AkteApp } from "./AkteApp";
+export type { AkteFiles } from "./AkteFiles";
 
-export { defineAkteFile, type AkteFile } from "./defineAkteFile";
-
-export { defineAkteFiles, type AkteFiles } from "./defineAkteFiles";
+export { defineAkteApp } from "./defineAkteApp";
+export { defineAkteFile } from "./defineAkteFile";
+export { defineAkteFiles } from "./defineAkteFiles";
