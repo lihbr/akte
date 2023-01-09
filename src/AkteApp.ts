@@ -14,11 +14,18 @@ import { isCLI } from "./lib/isCLI";
 
 export type Config<TGlobalData> = {
 	files: AkteFiles<TGlobalData>[];
-	globalData: GlobalDataFn<TGlobalData>;
 	build?: {
 		outDir?: string;
 	};
-};
+	// Most global data will eventually be objects we use this
+	// assumption to make mandatory or not the `globalData` method
+} & (TGlobalData extends Record<string | number | symbol, unknown>
+	? {
+			globalData: GlobalDataFn<TGlobalData>;
+	  }
+	: {
+			globalData?: GlobalDataFn<TGlobalData>;
+	  });
 
 const debug = createDebugger("akte:app");
 const debugWrite = createDebugger("akte:app:write");
@@ -199,7 +206,8 @@ export class AkteApp<TGlobalData = unknown> {
 	protected getGlobalDataPromise(): Awaitable<TGlobalData> {
 		if (!this._globalDataPromise) {
 			debugCache("retrieving global data...");
-			const globalDataPromise = this.config.globalData();
+			const globalDataPromise =
+				this.config.globalData?.() ?? (undefined as TGlobalData);
 
 			if (globalDataPromise instanceof Promise) {
 				globalDataPromise.then(() => {
