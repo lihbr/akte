@@ -1,0 +1,9 @@
+{
+	"name": "akte.examples.programmatic",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"devDependencies": {
+		"akte": "^0.0.2"
+	}
+}
