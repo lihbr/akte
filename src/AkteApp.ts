@@ -86,9 +86,13 @@ export class AkteApp<TGlobalData = unknown> {
 
 			return content;
 		} catch (error) {
+			if (error instanceof NotFoundError) {
+				throw error;
+			}
+
 			debugRender.error(error);
 
-			throw new NotFoundError(match.path);
+			throw new NotFoundError(match.path, { cause: error });
 		}
 	}
 

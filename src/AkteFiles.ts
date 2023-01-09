@@ -166,9 +166,11 @@ export class AkteFiles<
 		}
 
 		if (promise instanceof Promise) {
-			promise.then(() => {
-				debugCache("retrievd data %o", context.path);
-			});
+			promise
+				.then(() => {
+					debugCache("retrievd data %o", context.path);
+				})
+				.catch(() => {});
 		} else {
 			debugCache("retrievd data %o", context.path);
 		}
@@ -187,8 +189,7 @@ export class AkteFiles<
 			debugCache("retrieving bulk data... %o", this.path);
 
 			const bulkDataPromise =
-				this.definition.bulkData?.(context) ||
-				({} as Awaitable<Record<string, TData>>);
+				this.definition.bulkData?.(context) || ({} as Record<string, TData>);
 
 			if (bulkDataPromise instanceof Promise) {
 				bulkDataPromise.then(() => {

@@ -39,9 +39,10 @@ export const serverPlugin = <TGlobalData>(
 					return next();
 				}
 
-				let match: ReturnType<typeof options.app.lookup>;
 				try {
-					match = options.app.lookup(path);
+					const match = options.app.lookup(path);
+					const file = await options.app.render(match);
+					await writeFile(join(cacheDirPath, filePath), file);
 				} catch (error) {
 					if (error instanceof NotFoundError) {
 						return next();
@@ -49,9 +50,6 @@ export const serverPlugin = <TGlobalData>(
 
 					throw error;
 				}
-
-				const file = await options.app.render(match);
-				await writeFile(join(cacheDirPath, filePath), file);
 
 				// Rewrite URL
 				if (req.url) {
