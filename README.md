@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="./.github/akte-logo.svg" alt="Akte logo" height="128" />
+</p>
+
 # akte
 
 [![npm version][npm-version-src]][npm-version-href]

@@ -92,7 +92,9 @@
 		}
 	},
 	"workspaces": [
-		"playground"
+		".",
+		"playground",
+		"examples/*"
 	],
 	"engines": {
 		"node": ">=16.13.0"

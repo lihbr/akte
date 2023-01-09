@@ -1,0 +1,14 @@
+{
+	"name": "akte.examples.vite",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"devDependencies": {
+		"akte": "^0.0.2",
+		"vite": "^4.0.4"
+	}
+}
