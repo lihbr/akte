@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/lihbr/akte/compare/v0.0.2...v0.0.3) (2023-01-09)
+
+
+### Features
+
+* allow `globalData()` to be optional according to context ([ea202f9](https://github.com/lihbr/akte/commit/ea202f90c45e22615315cdf31f4a43fc54d7fae0))
+
+
+### Bug Fixes
+
+* render error propagation ([00fb23d](https://github.com/lihbr/akte/commit/00fb23d213a5d04cdc29ef95c7795fbfa29126b5))
+
+
+### Documentation
+
+* add examples ([9cd213f](https://github.com/lihbr/akte/commit/9cd213fd9b85a72dfd63aa0b930e23a8b42123ee))
+* add programmatic example ([3b6d2cc](https://github.com/lihbr/akte/commit/3b6d2ccb22a93a350f38c6bbf83e280c46f048c7))
+* update readme ([5e4b7f4](https://github.com/lihbr/akte/commit/5e4b7f45e946b2905dfab367051d1bf010dde38c))
+
 ### [0.0.2](https://github.com/lihbr/akte/compare/v0.0.1...v0.0.2) (2023-01-08)
 
 
