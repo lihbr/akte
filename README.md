@@ -11,19 +11,14 @@
 [![Conventional Commits][conventional-commits-src]][conventional-commits-href]
 [![License][license-src]][license-href]
 
+> **Warning**
+> Akte is in active development and you should pin the patch version before using.
+
 Minimal file generator, for websites and more.
 
-<!--
-
-TODO: Create a small list of package features:
-
-- 🤔 &nbsp;A useful feature;
-- 🥴 &nbsp;Another useful feature;
-- 🙃 &nbsp;A final useful feature.
-
-Non-breaking space: &nbsp; are here on purpose to fix emoji rendering on certain systems.
-
--->
+- 🚕 &nbsp;Minimal and flexible;
+- 🎡 &nbsp;CLI, CIs, serverless, it's *just* Node.js;
+- ⚡ &nbsp;Vite integration.
 
 ## Install
 
