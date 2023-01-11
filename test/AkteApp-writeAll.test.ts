@@ -20,23 +20,29 @@ it("writes all files at default output directory", async () => {
 
 	const volSnapshot = Object.fromEntries(
 		Object.entries(vol.toJSON()).map(([key, value]) => [
-			posix.relative(posix.join(process.cwd(), "../"), key),
+			`/${posix.relative(
+				// Windows has some issues with `posix.relative()`...
+				process.platform === "win32"
+					? posix.join(process.cwd(), "../")
+					: process.cwd(),
+				key,
+			)}`,
 			value,
 		]),
 	);
 	expect(volSnapshot).toMatchInlineSnapshot(`
 		{
-		  "dist/about.html": "Rendered: {\\"path\\":\\"/about\\",\\"data\\":{}}",
-		  "dist/bar.json": "Rendered: {\\"path\\":\\"/bar.json\\",\\"data\\":\\"bar\\"}",
-		  "dist/baz.json": "Rendered: {\\"path\\":\\"/baz.json\\",\\"data\\":\\"bar\\"}",
-		  "dist/foo.json": "Rendered: {\\"path\\":\\"/foo.json\\",\\"data\\":\\"foo\\"}",
-		  "dist/index.html": "Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}",
-		  "dist/pages/foo.html": "Rendered: {\\"path\\":\\"/pages/foo\\",\\"data\\":\\"foo\\"}",
-		  "dist/pages/foo/bar.html": "Rendered: {\\"path\\":\\"/pages/foo/bar\\",\\"data\\":\\"foo bar\\"}",
-		  "dist/pages/foo/bar/baz.html": "Rendered: {\\"path\\":\\"/pages/foo/bar/baz\\",\\"data\\":\\"foo bar baz\\"}",
-		  "dist/posts/bar.html": "Rendered: {\\"path\\":\\"/posts/bar\\",\\"data\\":\\"bar\\"}",
-		  "dist/posts/baz.html": "Rendered: {\\"path\\":\\"/posts/baz\\",\\"data\\":\\"bar\\"}",
-		  "dist/posts/foo.html": "Rendered: {\\"path\\":\\"/posts/foo\\",\\"data\\":\\"foo\\"}",
+		  "/dist/about.html": "Rendered: {\\"path\\":\\"/about\\",\\"data\\":{}}",
+		  "/dist/bar.json": "Rendered: {\\"path\\":\\"/bar.json\\",\\"data\\":\\"bar\\"}",
+		  "/dist/baz.json": "Rendered: {\\"path\\":\\"/baz.json\\",\\"data\\":\\"bar\\"}",
+		  "/dist/foo.json": "Rendered: {\\"path\\":\\"/foo.json\\",\\"data\\":\\"foo\\"}",
+		  "/dist/index.html": "Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}",
+		  "/dist/pages/foo.html": "Rendered: {\\"path\\":\\"/pages/foo\\",\\"data\\":\\"foo\\"}",
+		  "/dist/pages/foo/bar.html": "Rendered: {\\"path\\":\\"/pages/foo/bar\\",\\"data\\":\\"foo bar\\"}",
+		  "/dist/pages/foo/bar/baz.html": "Rendered: {\\"path\\":\\"/pages/foo/bar/baz\\",\\"data\\":\\"foo bar baz\\"}",
+		  "/dist/posts/bar.html": "Rendered: {\\"path\\":\\"/posts/bar\\",\\"data\\":\\"bar\\"}",
+		  "/dist/posts/baz.html": "Rendered: {\\"path\\":\\"/posts/baz\\",\\"data\\":\\"bar\\"}",
+		  "/dist/posts/foo.html": "Rendered: {\\"path\\":\\"/posts/foo\\",\\"data\\":\\"foo\\"}",
 		}
 	`);
 });
