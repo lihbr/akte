@@ -9,7 +9,7 @@ type Debugger = DebuggerFn & {
 	error: DebuggerFn;
 };
 
-const _canLog = isCLI && (!hasSilent || hasHelp || hasVersion);
+const _canLog = isCLI && (!hasSilent() || hasHelp() || hasVersion());
 
 export const createDebugger = (scope: string, canLog = _canLog): Debugger => {
 	const _debug = debug(scope);

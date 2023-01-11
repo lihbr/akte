@@ -63,26 +63,27 @@ export const runCLI = async (app: AkteApp): Promise<void> => {
 	process.title = "Akte CLI";
 
 	// Global flags
-	if (hasHelp) {
+	if (hasHelp()) {
 		debugCLI("displaying help");
 
 		return displayHelp();
-	} else if (hasVersion) {
+	} else if (hasVersion()) {
 		debugCLI("displaying version");
 
 		return displayVersion();
 	}
 
 	// Commands
-	switch (commandsAndFlags[0]) {
+	const [command] = commandsAndFlags();
+	switch (command) {
 		case "build":
-			debugCLI("running %o command", commandsAndFlags[0]);
+			debugCLI("running %o command", command);
 
 			return build(app);
 
 		default:
 			debugCLI.log(
-				`Akte → Unknown command \`${commandsAndFlags[0]}\`, use \`--help\` flag for manual`,
+				`Akte → Unknown command \`${command}\`, use \`--help\` flag for manual`,
 			);
 
 			exit(2);

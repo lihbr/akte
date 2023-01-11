@@ -168,11 +168,11 @@ export class AkteFiles<
 		if (promise instanceof Promise) {
 			promise
 				.then(() => {
-					debugCache("retrievd data %o", context.path);
+					debugCache("retrieved data %o", context.path);
 				})
 				.catch(() => {});
 		} else {
-			debugCache("retrievd data %o", context.path);
+			debugCache("retrieved data %o", context.path);
 		}
 
 		this._dataPromiseMap.set(context.path, promise);

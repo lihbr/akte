@@ -2,7 +2,7 @@ import { commandsAndFlags } from "./commandsAndFlags";
 
 export const hasFlag = (...flags: string[]): boolean => {
 	for (const flag of flags) {
-		if (commandsAndFlags.includes(flag)) {
+		if (commandsAndFlags().includes(flag)) {
 			return true;
 		}
 	}
@@ -10,10 +10,15 @@ export const hasFlag = (...flags: string[]): boolean => {
 	return false;
 };
 
-export const hasSilent = hasFlag("--silent", "-s");
-export const hasHelp =
-	hasFlag("--help", "-h") ||
-	commandsAndFlags.filter(
-		(commandOrFlag) => !["--silent", "-s"].includes(commandOrFlag),
-	).length === 0;
-export const hasVersion = hasFlag("--version", "-v");
+export const hasSilent = (): boolean => hasFlag("--silent", "-s");
+
+export const hasHelp = (): boolean => {
+	return (
+		hasFlag("--help", "-h") ||
+		commandsAndFlags().filter(
+			(commandOrFlag) => !["--silent", "-s"].includes(commandOrFlag),
+		).length === 0
+	);
+};
+
+export const hasVersion = (): boolean => hasFlag("--version", "-v");

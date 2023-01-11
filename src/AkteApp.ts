@@ -76,7 +76,7 @@ export class AkteApp<TGlobalData = unknown> {
 		const globalData = await this.getGlobalDataPromise();
 
 		try {
-			const content = match.file.render({
+			const content = await match.file.render({
 				path: match.path,
 				params,
 				globalData,
@@ -90,7 +90,7 @@ export class AkteApp<TGlobalData = unknown> {
 				throw error;
 			}
 
-			debugRender.error(error);
+			debugRender("could not render %o", match.path);
 
 			throw new NotFoundError(match.path, { cause: error });
 		}
@@ -154,14 +154,25 @@ export class AkteApp<TGlobalData = unknown> {
 		const outDir = args.outDir ?? this.config.build?.outDir ?? "dist";
 		const outDirPath = resolve(outDir);
 
+		const controller = new AbortController();
+
 		const write = async (path: string, content: string): Promise<void> => {
 			const filePath = join(outDirPath, path);
 			const fileDir = dirname(filePath);
 
 			try {
 				await mkdir(fileDir, { recursive: true });
-				await writeFile(filePath, content, "utf-8");
+				await writeFile(filePath, content, {
+					encoding: "utf-8",
+					signal: controller.signal,
+				});
 			} catch (error) {
+				if (controller.signal.aborted) {
+					return;
+				}
+
+				controller.abort();
+
 				debug.error("Akte → Failed to write %o\n", path);
 
 				throw error;
