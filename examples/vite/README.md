@@ -1,4 +1,4 @@
-# Vite
+# Vite &nbsp;[![Open in StackBlitz][stackblitz-src]][stackblitz-href]
 
 This example shows usage of Akte as a [Vite][vite] plugin. This is helpful for processing assets of any sort as well as taking advantage of Vite great developer experience while developing.
 
@@ -18,3 +18,5 @@ To work with Vite, Akte relies on a `.akte` cache folder (configurable). This fo
 ```
 
 [vite]: https://vitejs.dev
+[stackblitz-src]: https://developer.stackblitz.com/img/open_in_stackblitz_small.svg
+[stackblitz-href]: https://stackblitz.com/github/lihbr/akte/tree/master/examples/vite?file=files%2Findex.ts&theme=dark
