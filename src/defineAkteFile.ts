@@ -11,7 +11,31 @@ type FileDefinition<TGlobalData, TData> = Omit<
 	"bulkData"
 >;
 
+/**
+ * Creates an Akte files instance for a single file.
+ *
+ * @example
+ * 	const posts = defineAkteFile().from({
+ * 		path: "/about",
+ * 		data() {
+ * 			return {};
+ * 		},
+ * 		render(context) {
+ * 			return "...";
+ * 		},
+ * 	});
+ *
+ * @typeParam TGlobalData - Global data the Akte files expects.
+ * @typeParam TData - Data the Akte files expects (inferred by default)
+ * @returns A factory to create the Akte files from.
+ */
 export const defineAkteFile = <TGlobalData, TData = Empty>(): {
+	/**
+	 * Creates an Akte files instance for a single file from a definition.
+	 *
+	 * @param definition - The definition to create the instance from.
+	 * @returns The created Akte files.
+	 */
 	from: <
 		_TGlobalData extends TGlobalData,
 		_TData extends TData extends Empty

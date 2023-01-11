@@ -23,6 +23,11 @@ const DEFAULT_OPTIONS: Omit<ResolvedOptions<unknown>, "app" | "minifyHTML"> = {
 
 const debug = createDebugger("akte:vite", true);
 
+/**
+ * Akte Vite plugin factory.
+ *
+ * @param rawOptions - Plugin options.
+ */
 export const aktePlugin = <TGlobalData>(
 	rawOptions: Options<TGlobalData>,
 ): PluginOption[] => {

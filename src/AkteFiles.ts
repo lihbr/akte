@@ -4,6 +4,12 @@ import { type Awaitable } from "./types";
 import { createDebugger } from "./lib/createDebugger";
 import { pathToFilePath } from "./lib/pathToFilePath";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import type { AkteApp } from "./AkteApp";
+
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
 type Path<
 	TParams extends string[],
 	TPrefix extends string = string,
@@ -15,27 +21,74 @@ type Path<
 	? Path<Rest, `${TPrefix}:${TParams[0]}${string}`>
 	: string;
 
+/**
+ * A function responsible for fetching the data required to render a given file
+ * at the provided path. Used for optimization like server side rendering or
+ * serverless.
+ */
 export type FilesDataFn<
 	TGlobalData,
 	TParams extends string[],
 	TData,
 > = (context: {
+	/** Path to get data for. */
 	path: string;
+
+	/** Path parameters if any. */
 	params: Record<TParams[number], string>;
+
+	/** Akte app global data. */
 	globalData: TGlobalData;
 }) => Awaitable<TData>;
 
+/** A function responsible for fetching all the data required to render files. */
 export type FilesBulkDataFn<TGlobalData, TData> = (context: {
+	/** Akte app global data. */
 	globalData: TGlobalData;
 }) => Awaitable<Record<string, TData>>;
 
 export type FilesDefinition<TGlobalData, TParams extends string[], TData> = {
+	/**
+	 * Path pattern for the Akte files.
+	 *
+	 * @example
+	 * 	"/";
+	 * 	"/foo";
+	 * 	"/bar.json";
+	 * 	"/posts/:slug";
+	 * 	"/posts/:taxonomy/:slug";
+	 * 	"/pages/**";
+	 * 	"/assets/**.json";
+	 */
 	path: Path<TParams>;
+
+	/**
+	 * A function responsible for fetching the data required to render a given
+	 * file. Used for optimization like server side rendering or serverless.
+	 *
+	 * Throwing a {@link NotFoundError} makes the file at path to be treated as a
+	 * 404, any other error makes it treated as a 500.
+	 */
 	data?: FilesDataFn<TGlobalData, TParams, TData>;
+
+	/** A function responsible for fetching all the data required to render files. */
 	bulkData?: FilesBulkDataFn<TGlobalData, TData>;
+
+	/**
+	 * A function responsible for rendering
+	 *
+	 * @param context - Resolved file path, app global data, and data to render
+	 *   the file.
+	 * @returns Rendered file.
+	 */
 	render: (context: {
+		/** Path to render. */
 		path: string;
+
+		/** Akte app global data. */
 		globalData: TGlobalData;
+
+		/** File data for path. */
 		data: TData;
 	}) => Awaitable<string>;
 };
@@ -52,6 +105,7 @@ export class AkteFiles<
 > {
 	protected definition: FilesDefinition<TGlobalData, TParams, TData>;
 
+	/** Path pattern of this Akte files. */
 	get path(): string {
 		return this.definition.path;
 	}
@@ -62,6 +116,7 @@ export class AkteFiles<
 		debug("created %o", this.path);
 	}
 
+	/** @internal Prefer {@link AkteApp.render} or use at your own risks. */
 	async render(args: {
 		path: string;
 		params: Record<TParams[number], string>;
@@ -76,6 +131,7 @@ export class AkteFiles<
 		});
 	}
 
+	/** @internal Prefer {@link AkteApp.renderAll} or use at your own risks. */
 	async renderAll(args: {
 		globalData: TGlobalData;
 	}): Promise<Record<string, string>> {
@@ -122,6 +178,7 @@ export class AkteFiles<
 		return Object.fromEntries(fileEntries);
 	}
 
+	/** @internal Prefer {@link AkteApp.clearCache} or use at your own risks. */
 	clearCache(): void {
 		this._dataPromiseMap = new Map();
 		this._bulkDataPromise = undefined;

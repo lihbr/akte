@@ -12,18 +12,51 @@ import { createDebugger } from "./lib/createDebugger";
 import { pathToRouterPath } from "./lib/pathToRouterPath";
 import { isCLI } from "./lib/isCLI";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import type { defineAkteFile } from "./defineAkteFile";
+import type { defineAkteFiles } from "./defineAkteFiles";
+
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
+/** Akte app configuration object. */
 export type Config<TGlobalData> = {
+	/**
+	 * Akte files this config is responsible for.
+	 *
+	 * Create them with {@link defineAkteFile} and {@link defineAkteFiles}.
+	 */
 	files: AkteFiles<TGlobalData>[];
+
+	/** Configuration related to Akte build process. */
 	build?: {
+		/**
+		 * Output directory for Akte build command.
+		 *
+		 * @remarks
+		 *   This directory is overriden by the Akte Vite plugin when running Akte
+		 *   through Vite.
+		 * @defaultValue `"dist"` for Akte build command, `".akte"` for Akte Vite plugin.
+		 */
 		outDir?: string;
 	};
 	// Most global data will eventually be objects we use this
 	// assumption to make mandatory or not the `globalData` method
 } & (TGlobalData extends Record<string | number | symbol, unknown>
 	? {
+			/**
+			 * Global data retrieval function.
+			 *
+			 * The return value of this function is then shared with each Akte file.
+			 */
 			globalData: GlobalDataFn<TGlobalData>;
 	  }
 	: {
+			/**
+			 * Global data retrieval function.
+			 *
+			 * The return value of this function is then shared with each Akte file.
+			 */
 			globalData?: GlobalDataFn<TGlobalData>;
 	  });
 
@@ -33,6 +66,7 @@ const debugRender = createDebugger("akte:app:render");
 const debugRouter = createDebugger("akte:app:router");
 const debugCache = createDebugger("akte:app:cache");
 
+/** An Akte app, ready to be interacted with. */
 export class AkteApp<TGlobalData = unknown> {
 	protected config: Config<TGlobalData>;
 
@@ -46,6 +80,16 @@ export class AkteApp<TGlobalData = unknown> {
 		}
 	}
 
+	/**
+	 * Looks up the Akte file responsible for rendering the path.
+	 *
+	 * @param path - Path to lookup, e.g. "/foo"
+	 * @returns A match featuring the path, the path parameters if any, and the
+	 *   Akte file.
+	 * @throws {@link NotFoundError} When no Akte file is found for handling
+	 *   looked up path.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	lookup(path: string): MatchedRoute<{
 		file: AkteFiles<TGlobalData>;
 	}> & { path: string } {
@@ -65,6 +109,15 @@ export class AkteApp<TGlobalData = unknown> {
 		};
 	}
 
+	/**
+	 * Renders a match from {@link lookup}.
+	 *
+	 * @param match - Match to render.
+	 * @returns Rendered file.
+	 * @throws {@link NotFoundError} When the Akte file could not render the match
+	 *   (404), with an optional `cause` attached to it for uncaught errors (500)
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	async render(
 		match: MatchedRoute<{
 			file: AkteFiles<TGlobalData>;
@@ -96,6 +149,12 @@ export class AkteApp<TGlobalData = unknown> {
 		}
 	}
 
+	/**
+	 * Renders all Akte files.
+	 *
+	 * @returns Rendered files map.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	async renderAll(): Promise<Record<string, string>> {
 		debugRender("rendering all files...");
 
@@ -146,6 +205,13 @@ export class AkteApp<TGlobalData = unknown> {
 		return files;
 	}
 
+	/**
+	 * Writes a map of rendered Akte files to the specified `outDir`, or the app
+	 * specified one (defaults to `"dist"`).
+	 *
+	 * @param args - A map of rendered Akte files, and an optional `outDir`
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	async writeAll(args: {
 		outDir?: string;
 		files: Record<string, string>;
@@ -195,6 +261,14 @@ export class AkteApp<TGlobalData = unknown> {
 		);
 	}
 
+	/**
+	 * Build (renders and write) all Akte files to the specified `outDir`, or the
+	 * app specified one (defaults to `"dist"`).
+	 *
+	 * @param args - An optional `outDir`
+	 * @returns Built files array.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	async buildAll(args?: { outDir?: string }): Promise<string[]> {
 		const files = await this.renderAll();
 		await this.writeAll({ ...args, files });
@@ -202,6 +276,13 @@ export class AkteApp<TGlobalData = unknown> {
 		return Object.keys(files);
 	}
 
+	/**
+	 * Akte caches all `globalData`, `data`, `bulkData` calls for performance.
+	 * This function can be used to clear the cache.
+	 *
+	 * @param alsoClearFileCache - Also clear cache on all registered Akte files.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	clearCache(alsoClearFileCache = false): void {
 		debugCache("clearing...");
 
