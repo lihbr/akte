@@ -37,7 +37,7 @@ it("does not render files with no global data methods", async () => {
 		files: [noGlobalData],
 	});
 
-	await expect(app.renderAll()).resolves.toMatchInlineSnapshot('{}');
+	await expect(app.renderAll()).resolves.toMatchInlineSnapshot("{}");
 });
 
 it("throws on any render issue", async () => {

@@ -1,6 +1,6 @@
 import { commandsAndFlags } from "./commandsAndFlags";
 
-export const hasFlag = (...flags: string[]): boolean => {
+const hasFlag = (...flags: string[]): boolean => {
 	for (const flag of flags) {
 		if (commandsAndFlags().includes(flag)) {
 			return true;
