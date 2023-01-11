@@ -13,8 +13,9 @@
 		"node-fetch": "^3.3.0"
 	},
 	"devDependencies": {
-		"akte": "^0.0.2",
+		"akte": "file:../",
 		"cross-env": "^7.0.3",
+		"html-minifier-terser": "^7.1.0",
 		"tsx": "^3.12.2",
 		"vite": "^4.0.4"
 	}

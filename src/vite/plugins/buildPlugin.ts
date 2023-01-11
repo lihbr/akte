@@ -4,7 +4,6 @@ import { copyFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 import type { Plugin } from "vite";
-import { minify as _minify } from "html-minifier-terser";
 
 import type { ResolvedOptions } from "../types";
 import { pkg } from "../../lib/pkg";
@@ -96,6 +95,21 @@ export const buildPlugin = <TGlobalData>(
 			const operations = ["fixed html file paths"];
 			if (options.minifyHTML) {
 				operations.push("minified html");
+			}
+
+			let _minify = ((str: string) =>
+				Promise.resolve(str)) as typeof import("html-minifier-terser").minify;
+			if (options.minifyHTML) {
+				try {
+					_minify = (await import("html-minifier-terser")).minify;
+				} catch (error) {
+					debug.error(
+						"\nAkte → %o is required to minify HTML, install it or disable the %o option on the Vite plugin\n",
+						"html-minifier-terser",
+						"minifyHTML",
+					);
+					throw error;
+				}
 			}
 
 			const minify = async (partialBundle: {

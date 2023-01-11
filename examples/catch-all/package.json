@@ -4,6 +4,6 @@
 	"private": true,
 	"type": "module",
 	"devDependencies": {
-		"akte": "^0.0.2"
+		"akte": "latest"
 	}
 }
