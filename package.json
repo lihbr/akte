@@ -1,6 +1,6 @@
 {
 	"name": "akte",
-	"version": "0.0.3",
+	"version": "0.1.0",
 	"description": "Minimal file generator, for websites and more",
 	"keywords": [
 		"typescript",

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/lihbr/akte/compare/v0.0.3...v0.1.0) (2023-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* make `html-minifier-terser` an optional peer dependency
+
+### Chore
+
+* **deps:** fix lock file ([2951a50](https://github.com/lihbr/akte/commit/2951a50562c6747886d5b6cdac720910257020f5))
+
+
+### Refactor
+
+* make `html-minifier-terser` an optional peer dependency ([8b23301](https://github.com/lihbr/akte/commit/8b23301ad76da9327f9a526c6365dc589bce771e))
+
+
+### Documentation
+
+* add tsdocs ([2484d2e](https://github.com/lihbr/akte/commit/2484d2e25c0dbb1400cd84c58e2a09e2d12d4aa8))
+* provide missing tsconfig.json for stackblitz/standalone download ([bd403ab](https://github.com/lihbr/akte/commit/bd403abda9fd805a6614670189fb53d95d4b96a1))
+
 ### [0.0.3](https://github.com/lihbr/akte/compare/v0.0.2...v0.0.3) (2023-01-09)
 
 
