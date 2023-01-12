@@ -8,6 +8,7 @@ export const basic = (slot: string): string => {
 		<title>Akte + Vite</title>
 	</head>
 	<body>
+		<a href="/">index</a>
 		${slot}
 		<script type="module" src="/assets/main.ts"></script>
 	</body>

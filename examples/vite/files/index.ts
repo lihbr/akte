@@ -22,8 +22,21 @@ export const index = defineAkteFile<{ siteDescription: string }>().from({
 		const slot = /* html */ `<main>
 	<h1>basic typescript</h1>
 	<p>${context.globalData.siteDescription}</p>
+	<h2>posts</h2>
 	<ul>
 		${posts.join("\n")}
+	</ul>
+	<h2>pages</h2>
+	<ul>
+		<li><a href="/foo">foo</a></li>
+		<li><a href="/foo/bar">foo bar</a></li>
+		<li><a href="/foo/bar/baz">foo bar baz</a></li>
+	</ul>
+	<h2>jsons</h2>
+	<ul>
+		<li><a href="/foo.json">foo</a></li>
+		<li><a href="/bar.json">bar</a></li>
+		<li><a href="/baz.json">baz</a></li>
 	</ul>
 </main>
 `;

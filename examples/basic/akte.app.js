@@ -53,6 +53,7 @@ const posts = defineAkteFiles().from({
 	},
 	render(context) {
 		return /* html */ `<main>
+	<a href="/">index</a>
 	<h1>${context.data.title}</h1>
 	<p>${context.data.body}</p>
 </main>`;
