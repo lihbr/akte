@@ -2,3 +2,8 @@
 	command = "npm run build --workspace docs"
 	publish = "docs/dist"
 	ignore  = "git diff --quiet HEAD^ HEAD ./docs ./package.json ./CHANGELOG.md ./netlify.toml"
+
+[[headers]]
+	for = "/assets/*"
+	[headers.value]
+	access-control-allow-origin = "*"
