@@ -9,5 +9,7 @@ export default defineConfig({
 		outDir: "../dist",
 		emptyOutDir: true,
 	},
-	plugins: [akte({ app })],
+	// TypeScript appears to be drunk here with npm workspaces
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	plugins: [akte({ app: app as any })],
 });
