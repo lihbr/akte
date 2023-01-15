@@ -12,7 +12,7 @@ Getting started with Akte takes a few minutes and consists of two things:
 Have a look at [the examples](/examples) to get a feeling of what Akte looks like, [some are even available on Stackblitz](/examples#vite).
 :::
 
-## Setup
+## Akte setup
 
 1. Install Akte
 
@@ -75,6 +75,12 @@ import { app } from "./akte.app";
 export default defineConfig({
 	plugins: [akte({ app })],
 });
+```
+
+3. Add `.akte` to your `.gitignore` file
+
+```ignore
+.akte
 ```
 
 You're ready to start developing your Akte app though Vite.
