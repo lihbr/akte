@@ -7,7 +7,9 @@ import type { AkteFiles } from "./AkteFiles";
 import type { Awaitable, GlobalDataFn } from "./types";
 import { NotFoundError } from "./errors";
 import { runCLI } from "./runCLI";
+import { akteWelcome } from "./akteWelcome";
 
+import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { createDebugger } from "./lib/createDebugger";
 import { pathToRouterPath } from "./lib/pathToRouterPath";
 import { isCLI } from "./lib/isCLI";
@@ -71,6 +73,12 @@ export class AkteApp<TGlobalData = unknown> {
 	protected config: Config<TGlobalData>;
 
 	constructor(config: Config<TGlobalData>) {
+		if (!__PRODUCTION__) {
+			if (config.files.length === 0 && akteWelcome) {
+				config.files.push(akteWelcome);
+			}
+		}
+
 		this.config = config;
 
 		debug("created with %o files", this.config.files.length);
