@@ -99,6 +99,7 @@
 	},
 	"workspaces": [
 		".",
+		"docs",
 		"playground",
 		"examples/*"
 	],

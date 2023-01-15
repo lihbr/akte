@@ -1,0 +1,378 @@
+@import "@fontsource/ibm-plex-sans";
+@import "@wooorm/starry-night/style/both.css";
+
+/* Properties */
+
+:root {
+	--background: #fffefe;
+	--foreground: #1f1919;
+	--dimmedforeground: #594646;
+	--altBackground: #faf1f1;
+	--altForeground: #131010;
+	--scheme: light;
+	--flamingo: #e84311;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #131010;
+		--foreground: #faf1f1;
+		--dimmedforeground: #cdbcbc;
+		--altBackground: #1f1919;
+		--altForeground: #fffefe;
+		--scheme: dark;
+	}
+}
+
+/* Reset with defaults */
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+*:focus {
+	outline: none;
+}
+*:focus-visible {
+	outline: 1px solid var(--foreground);
+}
+
+html {
+	padding: 0;
+	background: var(--background);
+	color-scheme: var(--scheme);
+	color: var(--foreground);
+	-webkit-text-size-adjust: 100%;
+	-moz-tab-size: 2;
+	tab-size: 2;
+	font-size: 100%;
+	line-height: 1.5;
+	font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+	margin: 2rem 1rem;
+}
+
+hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+	color: inherit;
+}
+
+a:hover, a:focus {
+	color: var(--flamingo);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: "Consolas", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container */
+
+header, main, footer {
+	max-width: 40rem;
+	margin-left: clamp(0rem, 66.7vw - 38.3rem, calc(50vw - 20rem));
+}
+
+/* Header */
+
+header {
+	margin-bottom: 4rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header img {
+	height: 128px;
+	width: auto;
+}
+
+header figure {
+	text-align: center;
+}
+
+header ul {
+	text-align: right;
+	/* list-style-type: disc;
+	list-style-position: inside; */
+}
+
+header a.active {
+	color: var(--flamingo);
+	cursor: default;
+	text-decoration: none;
+}
+
+/* Nav */
+
+.no-toc nav.toc {
+	display: none;
+}
+
+nav.toc {
+	position: fixed;
+	left: clamp(44rem, 66.7vw - 38.3rem + 44rem, calc(50vw + 24rem));
+	top: 16.5rem;
+	bottom: 2rem;
+	right: 2rem;
+	display: none;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+nav.toc h2 {
+	font-size: 1rem;
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+nav.toc > ol {
+	overflow: auto;
+	flex: 1;
+}
+
+nav.toc ol {
+	margin: 0;
+	list-style-type: none;
+}
+
+nav.toc ol ol {
+	margin-left: 1rem;
+}
+
+nav.toc a[href^="#-breaking-changes"],
+nav.toc a[href^="#documentation"],
+nav.toc a[href^="#features"],
+nav.toc a[href^="#bug-fixes"],
+nav.toc a[href^="#refactor"],
+nav.toc a[href^="#chore"],
+nav.toc a[href^="#footnote-label"] {
+	display: none;
+}
+
+/* Prose */
+
+h1, h2, h3, h4 {
+	color: var(--flamingo);
+}
+
+h2, h3, h4 {
+	margin-top: 2rem;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+	text-decoration: none;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover,
+h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus {
+	text-decoration: underline;
+}
+
+h1 a:hover::after, h2 a:hover::after, h3 a:hover::after, h4 a:hover::after,
+h1 a:focus::after, h2 a:focus::after, h3 a:focus::after, h4 a:focus::after {
+	content: " #";
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.625rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+main > p, main > blockquote, main > figure, main > ul, main > ol {
+	margin-top: 1rem;
+}
+
+main ul, main ol {
+	list-style-position: inside;
+}
+
+main ul ul, main ul ol, main ol ol, main ol ul {
+	margin-left: 1.5rem;
+}
+
+main ul {
+	list-style-type: disc;
+}
+
+main ol {
+	list-style-type: numeric;
+}
+
+main blockquote {
+	border-left: 2px solid var(--flamingo);
+	padding-left: .75em;
+	font-style: italic;
+}
+
+p code, li code, figure.highlight {
+	background: var(--altBackground);
+	color: var(--altForeground);
+}
+
+p code, li code {
+	padding: .25em;
+	margin: -.25em 0;
+}
+
+a:has(code) {
+	text-decoration: none;
+}
+a:has(code) code:hover, a:has(code) code:focus {
+	color: var(--flamingo);
+}
+
+a.button {
+	display: inline-block;
+	text-decoration: none;
+	background: var(--flamingo);
+	color: var(--background);
+	padding: 1rem;
+	clip-path: polygon(12% 0%, 100% 11%, 92% 88%, 0% 100%);
+	transition: clip-path cubic-bezier(.54,.1,0,.99) .25s;
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+a.button:hover, a.button:focus {
+	clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+figure.highlight {
+	padding: .5rem;
+}
+
+/* Footnotes */
+
+main a[data-footnote-ref] {
+	text-decoration: none;
+}
+
+main a[data-footnote-ref]::before {
+	content: "["
+}
+
+main a[data-footnote-ref]::after {
+	content: "]"
+}
+
+section[data-footnotes] {
+	color: var(--dimmedforeground);
+	margin-top: 4rem;
+	font-size: .875rem;
+}
+
+section[data-footnotes] h2 {
+	display: none;
+}
+
+section[data-footnotes] p {
+	display: inline;
+}
+
+/* Footer */
+
+footer {
+	margin-top: 4rem;
+}
+
+footer hr {
+	margin-bottom: 1rem;
+}
+
+/* Responsive */
+
+@media (min-width: 860px) {
+	body {
+		margin: 2rem;
+	}
+
+	nav.toc {
+		display: flex;
+	}
+}

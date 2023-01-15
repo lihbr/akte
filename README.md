@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="./.github/akte-logo.svg" alt="Akte logo" height="128" />
+	<img src="./docs/public/logo.svg" alt="Akte logo" height="128" />
 </p>
 
 # akte
@@ -17,8 +17,12 @@
 Minimal file generator, for websites and more.
 
 - 🚕 &nbsp;Minimal and flexible;
-- 🎡 &nbsp;CLI, CIs, serverless, it's *just* Node.js;
-- ⚡ &nbsp;Vite integration.
+- ⚡ &nbsp;Vite integration;
+- 🛰 &nbsp;Serverless ready;
+- 🎹 &nbsp;Programmatic API;
+- 🌊 &nbsp;Controllable data cascade;
+- 🗜 &nbsp;Tiny install, 600kB;
+- 💼 &nbsp;Portable, 6kB bundle size.
 
 ## Install
 
@@ -28,7 +32,7 @@ npm install --save-dev akte
 
 ## Documentation
 
-To discover what's new on this package check out [the changelog][changelog]. For full documentation, check out the [dedicated document][documentation] (GitHub).
+To discover what's new on this package check out [the changelog][changelog]. For full documentation, check out the [official Akte documentation][documentation].
 
 ## Contributing
 
@@ -50,7 +54,7 @@ Whether you're helping me fix bugs, improve the site, or spread the word, I'd lo
 
 <!-- Links -->
 
-[documentation]: ./DOCUMENTATION.md
+[documentation]: https://akte.js.org
 [changelog]: ./CHANGELOG.md
 [contributing]: ./CONTRIBUTING.md
 [license]: ./LICENSE
