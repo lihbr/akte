@@ -34,19 +34,29 @@ export default defineConfig({
 			name: "akte:welcome",
 			async writeBundle(options) {
 				const match = app.lookup("/welcome");
-				const welcomePage = await app.render(match);
+				let welcomePage = await app.render(match);
+
+				const docURL = "https://akte.netlify.app";
 
 				// Load assets from documentation
-				welcomePage.replace(
+				welcomePage = welcomePage.replace(
 					"</head>",
-					`<base href="https://akte.js.org" /></head>`,
+					`<base href="${docURL}" /></head>`,
+				);
+				welcomePage = welcomePage.replaceAll(
+					`href="/assets`,
+					`href="${docURL}/assets`,
+				);
+				welcomePage = welcomePage.replace(
+					/(src="\/assets\/js\/\w+?)\.ts/g,
+					"$1.js",
 				);
 
-				const welcomePageMin = await minify(welcomePage, MINIFY_HTML_OPTIONS);
+				welcomePage = await minify(welcomePage, MINIFY_HTML_OPTIONS);
 
 				await fs.writeFile(
 					path.resolve(options.dir || "dist", "akteWelcome.html"),
-					welcomePageMin,
+					welcomePage,
 					"utf-8",
 				);
 			},

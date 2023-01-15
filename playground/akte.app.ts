@@ -6,8 +6,8 @@ import { postsSlug } from "./src/pages/posts/slug";
 import { catchAll } from "./src/pages/catchAll";
 
 export const app = defineAkteApp({
-	// files: [],
-	files: [index, sitemap, postsSlug, catchAll],
+	files: [],
+	// files: [index, sitemap, postsSlug, catchAll],
 	globalData: () => {
 		return 1;
 	},
