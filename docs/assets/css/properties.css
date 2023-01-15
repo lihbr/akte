@@ -1,0 +1,20 @@
+:root {
+	--background: #fffefe;
+	--foreground: #1f1919;
+	--dimmedForeground: #594646;
+	--altBackground: #faf1f1;
+	--altForeground: #131010;
+	--scheme: light;
+	--flamingo: #e84311;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #131010;
+		--foreground: #faf1f1;
+		--dimmedForeground: #cdbcbc;
+		--altBackground: #1f1919;
+		--altForeground: #fffefe;
+		--scheme: dark;
+	}
+}

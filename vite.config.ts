@@ -36,7 +36,7 @@ export default defineConfig({
 				const match = app.lookup("/welcome");
 				let welcomePage = await app.render(match);
 
-				const docURL = "https://akte.netlify.app";
+				const docURL = "https://akte.js.org";
 
 				// Load assets from documentation
 				welcomePage = welcomePage.replace(

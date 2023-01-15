@@ -1,0 +1,152 @@
+main {
+	& h1, & h2, & h3, & h4 {
+		color: var(--flamingo);
+
+		& a {
+			text-decoration: none;
+
+			&:hover, &:focus {
+				text-decoration: underline;
+
+				&::after {
+					content: " #";
+				}
+			}
+		}
+	}
+
+	& h2 {
+		margin-top: 4rem;
+	}
+
+	& h3, & h4 {
+		margin-top: 2rem;
+	}
+
+	& h1 {
+		font-size: 2rem;
+	}
+
+	& h2 {
+		font-size: 1.625rem;
+	}
+
+	& h3 {
+		font-size: 1.25rem;
+	}
+
+	& > p, & > blockquote, & > figure, & > ul, & > ol, & > .callout {
+		margin-top: 1rem;
+	}
+
+	& ul, & ol {
+		list-style-position: inside;
+	}
+
+	& ul ul, & ul ol, & ol ol, & ol ul {
+		margin-left: 1.5rem;
+	}
+
+	& ul {
+		list-style-type: disc;
+	}
+
+	& ol {
+		list-style-type: numeric;
+	}
+
+	& blockquote {
+		border-left: 2px solid var(--flamingo);
+		padding-left: .75em;
+		font-style: italic;
+	}
+
+	& p code, & li code, & figure.highlight {
+		color: var(--altForeground);
+	}
+
+	& h2 code, & h3 code, & h4 code, & p code, & li code {
+		background: var(--altBackground);
+		padding: .25em;
+		margin: -.25em 0;
+	}
+
+	& figure.highlight {
+		background: var(--altBackground);
+		overflow: auto;
+		padding: .5rem;
+	}
+
+	& .callout {
+		display: flex;
+		padding: .5rem;
+		align-items: flex-start;
+		gap: 1rem;
+		background: var(--altBackground);
+		color: var(--dimmedForeground);
+
+		&::before {
+			content: attr(data-icon);
+			padding: .5rem;
+			margin: .5rem 0;
+			background: var(--flamingo);
+			clip-path: polygon(12% 0%, 100% 11%, 92% 88%, 0% 100%);
+		}
+
+		& h2, & h3, & h4 {
+			margin-top: 0;
+			font-size: 1rem;
+			color: var(--foreground);
+		}
+	}
+
+	& a:has(code) {
+		text-decoration: none;
+
+		& code:hover, & code:focus {
+			color: var(--flamingo);
+		}
+	}
+
+	& a.button {
+		display: inline-block;
+		text-decoration: none;
+		background: var(--flamingo);
+		color: var(--background);
+		padding: 1rem;
+		clip-path: polygon(12% 0%, 100% 11%, 92% 88%, 0% 100%);
+		transition: clip-path cubic-bezier(.54,.1,0,.99) .25s;
+		font-size: 1.25rem;
+		font-weight: 700;
+
+		&:hover, &:focus {
+			clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+		}
+	}
+
+	& a[data-footnote-ref] {
+		text-decoration: none;
+
+		&::before {
+			content: "["
+		}
+
+		&::after {
+			content: "]"
+		}
+	}
+
+	& section[data-footnotes] {
+		color: var(--dimmedForeground);
+		margin-top: 4rem;
+		font-size: .875rem;
+
+		& h2 {
+			display: none;
+		}
+
+		& p {
+			display: inline;
+		}
+	}
+}

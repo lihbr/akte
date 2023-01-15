@@ -1,5 +1,7 @@
 <p align="center">
-	<img src="./docs/public/logo.svg" alt="Akte logo" height="128" />
+	<a href="https://akte.js.org">
+		<img src="./docs/public/logo.svg" alt="Akte logo" height="128" />
+	</a>
 </p>
 
 # akte

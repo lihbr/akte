@@ -36,6 +36,7 @@
 		"cssnano": "^5.1.14",
 		"html-minifier-terser": "^7.1.0",
 		"postcss-import": "^15.1.0",
+		"postcss-nesting": "^10.2.0",
 		"vite": "^4.0.4"
 	}
 }

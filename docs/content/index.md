@@ -54,4 +54,4 @@ Akte is fully tree-shakeable allowing for smooth run on constrained environment,
 
 ### Akte?
 
-Akte is German for "file", it is pronounced [`[ˈaktə]`](https://upload.wikimedia.org/wikipedia/commons/b/bf/De-Akte.ogg). While "Datei" is more commonly used in German when referring to a file, I preferred "Akte". _It ain't a democracy!_
+Akte is German for "file", it is pronounced [`[ˈaktə]`](https://upload.wikimedia.org/wikipedia/commons/b/bf/De-Akte.ogg). While "Datei" is more commonly used in German when referring to a computer file, I preferred "Akte". _It ain't a democracy!_

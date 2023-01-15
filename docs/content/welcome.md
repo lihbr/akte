@@ -26,6 +26,6 @@ export const app = defineAkteApp({
 
 ## Documentation
 
-Learn more about Akte, browse references, and find examples on [Akte documentation](https://akte.lihbr.com?source=welcome).
+Learn more about Akte, browse references, and find examples on [Akte documentation](https://akte.js.org?source=welcome).
 
 [^1]: This file is only shown in development, when no other Akre files are registered within your `akte.app.ts` configuration. When bundling Akte (e.g. for serverless usage), this file gets treeshaken out of the bundle.

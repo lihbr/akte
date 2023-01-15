@@ -5,6 +5,7 @@ export const base = (
 		title?: string;
 	},
 ): string => {
+	const docURL = "https://akte.js.org";
 	const title = args.title ? `Akte - ${args.title}` : "Akte";
 	const description =
 		"A minimal file generator, for websites and more. Akte's minimal API allows it to be portable and to run in various environments, from CIs, to serverless.";
@@ -14,24 +15,24 @@ export const base = (
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="canonical" href="https://akte.js.org${args.path}" />
+		<link rel="canonical" href="${docURL}${args.path}" />
 		<title>${title}</title>
 		<meta name="description" content="${description}">
 
 		<meta property="og:site_name" content="Akte">
 		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://akte.js.org${args.path}">
+		<meta property="og:url" content="${docURL}${args.path}">
 
 		<meta property="og:title" content="${title}">
 		<meta property="og:description" content="${description}">
-		<meta property="og:image" content="https://akte.js.org/meta.png">
+		<meta property="og:image" content="${docURL}/meta.png">
 
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@li_hbr">
 
 		<meta name="twitter:title" content="${title}">
 		<meta name="twitter:description" content="${description}">
-		<meta name="twitter:image" content="https://akte.js.org/meta.png">
+		<meta name="twitter:image" content="${docURL}/meta.png">
 
 		<link rel="icon" type="image/x-icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

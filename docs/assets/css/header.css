@@ -1,0 +1,26 @@
+header {
+	margin-bottom: 4rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+
+	& img {
+		height: 128px;
+		width: auto;
+	}
+
+	& figure {
+		text-align: center;
+	}
+
+	& ul {
+		text-align: right;
+	}
+
+	& a.active {
+		color: var(--flamingo);
+		cursor: default;
+		text-decoration: none;
+	}
+}

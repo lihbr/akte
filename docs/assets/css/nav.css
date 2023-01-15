@@ -1,0 +1,46 @@
+nav.toc {
+	position: fixed;
+	left: clamp(44rem, 110vw - 66rem + 44rem, calc(50vw + 22rem));
+	top: 16.5rem;
+	bottom: 2rem;
+	right: 2rem;
+	display: none;
+	flex-direction: column;
+	overflow: hidden;
+
+	& h2 {
+		color: var(--flamingo);
+		font-size: 1rem;
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
+	& > ol {
+		overflow: auto;
+		flex: 1;
+	}
+
+	& ol {
+		list-style-type: none;
+	}
+
+	& ol ol {
+		margin-left: 1rem;
+	}
+
+	& a[href^="#-breaking-changes"],
+	& a[href^="#documentation"],
+	& a[href^="#features"],
+	& a[href^="#bug-fixes"],
+	& a[href^="#refactor"],
+	& a[href^="#chore"],
+	& a[href^="#footnote-label"] {
+		display: none;
+	}
+}
+
+@media (min-width: 860px) {
+	nav.toc {
+		display: flex;
+	}
+}

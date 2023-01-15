@@ -17,7 +17,7 @@ import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
 import type { ElementContent, Root as HRoot } from "hast";
-import type { Root as MDRoot } from "mdast";
+import type { Content, Root as MDRoot } from "mdast";
 
 const rehypeStarryNight: Plugin<[], HRoot> = () => {
 	const starryNightPromise = createStarryNight(common);
@@ -96,7 +96,7 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 			.use(remarkParse)
 			.use(remarkGfm)
 			.use(remarkFrontmatter, ["yaml"])
-			.use(() => (_: MDRoot, file: VFile) => {
+			.use(() => (_tree: MDRoot, file: VFile) => {
 				matter(file);
 			})
 			.use(remarkDirective)
@@ -111,38 +111,41 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 							const data = node.data || (node.data = {});
 							const tagName =
 								node.type === "textDirective" ? "span" : "article";
-
-							data.hName = tagName;
 							const properties = h(tagName, node.attributes).properties || {};
 							properties.className ||= [];
 							(properties.className as string[]).push("callout");
 
-							if (properties.icon) {
-								properties.dataIcon = properties.icon;
-								delete properties.icon;
+							const icon = properties.icon as string | undefined;
+							delete properties.icon;
+							const title = properties.title as string | undefined;
+							delete properties.title;
+							const level = properties.level as
+								| 1
+								| 2
+								| 3
+								| 4
+								| 5
+								| 6
+								| undefined;
+							delete properties.level;
+
+							if (icon) {
+								properties.dataIcon = icon;
 							}
 
-							const children = node.children;
-							if (properties.title) {
-								const title = properties.title;
-								delete properties.title;
-
+							const children = node.children as Content[];
+							if (title) {
 								children.unshift({
 									type: "heading",
-									depth: properties.level || 4,
+									depth: level || 4,
 									children: [{ type: "text", value: title }],
 								});
 							}
-							delete properties.level;
 
-							node.children = [
-								{
-									type: "div",
-									children,
-								},
-							];
-
+							data.hName = tagName;
 							data.hProperties = properties;
+							// @ts-expect-error I don't know how to straighten that :'(
+							node.children = [{ type: "div", children }];
 						}
 					}
 				});
@@ -168,15 +171,11 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 					const [nav, ...children] = tree.children;
 					tree.children = [];
 
-					if (file.data.matter.toc !== false) {
+					if ((file.data.matter as Record<string, unknown>).toc !== false) {
 						tree.children.push(nav);
 					}
 
-					tree.children.push({
-						type: "element",
-						tagName: "main",
-						children,
-					});
+					tree.children.push(h("main", ...children));
 				}
 
 				visit(tree, "element", (node, index, parent) => {
