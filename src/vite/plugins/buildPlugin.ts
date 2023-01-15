@@ -30,6 +30,10 @@ export const buildPlugin = <TGlobalData>(
 				debug("mode %o detected, skipping rollup config update", env.mode);
 
 				return;
+			} else if (env.mode === "production" && env.command === "serve") {
+				debug("mode %o detected, skipping rollup config update", "preview");
+
+				return;
 			}
 
 			debug("updating rollup config...");
