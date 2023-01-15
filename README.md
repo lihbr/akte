@@ -12,7 +12,7 @@
 [![License][license-src]][license-href]
 
 > **Warning**
-> Akte is in active development and you should pin the patch version before using.
+> Akte is in active development, it's usable, however consider pinning the patch version before using.
 
 Minimal file generator, for websites and more.
 
@@ -21,6 +21,7 @@ Minimal file generator, for websites and more.
 - 🛰 &nbsp;Serverless ready;
 - 🎹 &nbsp;Programmatic API;
 - 🌊 &nbsp;Controllable data cascade;
+- 🈂 &nbsp;TypeScript supercharged;
 - 🗜 &nbsp;Tiny install, 600kB;
 - 💼 &nbsp;Portable, 6kB bundle size.
 

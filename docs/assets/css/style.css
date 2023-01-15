@@ -6,7 +6,7 @@
 :root {
 	--background: #fffefe;
 	--foreground: #1f1919;
-	--dimmedforeground: #594646;
+	--dimmedForeground: #594646;
 	--altBackground: #faf1f1;
 	--altForeground: #131010;
 	--scheme: light;
@@ -17,7 +17,7 @@
 	:root {
 		--background: #131010;
 		--foreground: #faf1f1;
-		--dimmedforeground: #cdbcbc;
+		--dimmedForeground: #cdbcbc;
 		--altBackground: #1f1919;
 		--altForeground: #fffefe;
 		--scheme: dark;
@@ -183,10 +183,6 @@ header a.active {
 
 /* Nav */
 
-.no-toc nav.toc {
-	display: none;
-}
-
 nav.toc {
 	position: fixed;
 	left: clamp(44rem, 110vw - 66rem + 44rem, calc(50vw + 22rem));
@@ -210,7 +206,6 @@ nav.toc > ol {
 }
 
 nav.toc ol {
-	margin: 0;
 	list-style-type: none;
 }
 
@@ -264,7 +259,7 @@ h3 {
 	font-size: 1.25rem;
 }
 
-main > p, main > blockquote, main > figure, main > ul, main > ol {
+main > p, main > blockquote, main > figure, main > ul, main > ol, main > .callout {
 	margin-top: 1rem;
 }
 
@@ -298,6 +293,34 @@ p code, li code, figure.highlight {
 p code, li code {
 	padding: .25em;
 	margin: -.25em 0;
+}
+
+main .callout {
+	display: flex;
+	padding: .5rem;
+	align-items: flex-start;
+	gap: 1rem;
+	background: var(--altBackground);
+}
+
+main .callout::before {
+	content: attr(data-icon);
+	padding: .5rem;
+	margin-top: .5rem;
+	background: var(--flamingo);
+	clip-path: polygon(12% 0%, 100% 11%, 92% 88%, 0% 100%);
+}
+
+main .callout h2,
+main .callout h3,
+main .callout h4 {
+	margin-top: 0;
+	font-size: 1rem;
+	color: var(--foreground);
+}
+
+main .callout {
+	color: var(--dimmedForeground);
 }
 
 a:has(code) {
@@ -342,7 +365,7 @@ main a[data-footnote-ref]::after {
 }
 
 section[data-footnotes] {
-	color: var(--dimmedforeground);
+	color: var(--dimmedForeground);
 	margin-top: 4rem;
 	font-size: .875rem;
 }

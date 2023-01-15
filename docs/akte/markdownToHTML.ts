@@ -4,6 +4,7 @@ import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import { type VFile, matter } from "vfile-matter";
+import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
 
 import rehypeSlug from "rehype-slug";
@@ -14,9 +15,11 @@ import rehypeStringify from "rehype-stringify";
 import { common, createStarryNight } from "@wooorm/starry-night";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
-import { type ElementContent, type Root } from "hast";
+import { h } from "hastscript";
+import type { ElementContent, Root as HRoot } from "hast";
+import type { Root as MDRoot } from "mdast";
 
-const rehypeStarryNight: Plugin<[], Root> = () => {
+const rehypeStarryNight: Plugin<[], HRoot> = () => {
 	const starryNightPromise = createStarryNight(common);
 	const prefix = "language-";
 
@@ -93,8 +96,56 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 			.use(remarkParse)
 			.use(remarkGfm)
 			.use(remarkFrontmatter, ["yaml"])
-			.use(() => (_: Root, file: VFile) => {
+			.use(() => (_: MDRoot, file: VFile) => {
 				matter(file);
+			})
+			.use(remarkDirective)
+			.use(() => (tree: MDRoot) => {
+				visit(tree, (node) => {
+					if (
+						node.type === "textDirective" ||
+						node.type === "leafDirective" ||
+						node.type === "containerDirective"
+					) {
+						if (node.name === "callout") {
+							const data = node.data || (node.data = {});
+							const tagName =
+								node.type === "textDirective" ? "span" : "article";
+
+							data.hName = tagName;
+							const properties = h(tagName, node.attributes).properties || {};
+							properties.className ||= [];
+							(properties.className as string[]).push("callout");
+
+							if (properties.icon) {
+								properties.dataIcon = properties.icon;
+								delete properties.icon;
+							}
+
+							const children = node.children;
+							if (properties.title) {
+								const title = properties.title;
+								delete properties.title;
+
+								children.unshift({
+									type: "heading",
+									depth: properties.level || 4,
+									children: [{ type: "text", value: title }],
+								});
+							}
+							delete properties.level;
+
+							node.children = [
+								{
+									type: "div",
+									children,
+								},
+							];
+
+							data.hProperties = properties;
+						}
+					}
+				});
 			})
 			.use(remarkRehype, { allowDangerousHtml: true })
 
@@ -108,7 +159,26 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 					link: "",
 				},
 			})
-			.use(() => (tree: Root) => {
+			.use(() => (tree: HRoot, file: VFile) => {
+				// Extract nav and wrap article
+				if (
+					tree.children[0].type === "element" &&
+					tree.children[0].tagName === "nav"
+				) {
+					const [nav, ...children] = tree.children;
+					tree.children = [];
+
+					if (file.data.matter.toc !== false) {
+						tree.children.push(nav);
+					}
+
+					tree.children.push({
+						type: "element",
+						tagName: "main",
+						children,
+					});
+				}
+
 				visit(tree, "element", (node, index, parent) => {
 					if (!parent || index === null) {
 						return;

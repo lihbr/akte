@@ -8,7 +8,9 @@ Overall, the main difference between Akte and the tools listed below is that Akt
 
 These comparisons exists to help sharing a better picture of where Akte stands next to other tool.
 
-> If you notice any error, or think a statement is unclear or wrong, [feel free to open a PR](https://github.com/lihbr/akte/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc)~
+:::callout{icon=❔ title="Noticed an error?"}
+If you noticed any error, or think a statement is unclear or wrong, [feel free to open a PR](https://github.com/lihbr/akte/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc)~
+:::
 
 ## 11ty
 

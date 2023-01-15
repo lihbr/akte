@@ -67,9 +67,7 @@ export const pages = defineAkteFiles<{ version: string }>().from({
 				<ul>${navigation.join("")}</ul>
 			</nav>
 		</header>
-		<main${context.data.matter.toc === false ? ' class="no-toc"' : ""}>
-			${context.data.html}
-		</main>
+		${context.data.html}
 		<footer>
 			<hr />
 			<p>

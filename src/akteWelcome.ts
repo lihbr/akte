@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { createRequire } from "node:module";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
-import { defineAkteFile } from "./defineAkteFile";
+import { defineAkteFiles } from "./defineAkteFiles";
 import { NotFoundError } from "./errors";
 
 /**
@@ -17,7 +17,7 @@ import { NotFoundError } from "./errors";
  */
 export const akteWelcome = __PRODUCTION__
 	? null
-	: defineAkteFile().from({
+	: defineAkteFiles().from({
 			path: "/",
 			async data() {
 				try {
@@ -31,6 +31,10 @@ export const akteWelcome = __PRODUCTION__
 				} catch (error) {
 					throw new NotFoundError("/");
 				}
+			},
+			bulkData() {
+				// Never build the file
+				return {};
 			},
 			render(context) {
 				return context.data.html;

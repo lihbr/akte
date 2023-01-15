@@ -5,7 +5,9 @@ toc: false
 
 # Akte
 
-> ⚠ Akte is in active development and you should pin the patch version before using.
+:::callout{icon=⚠ title="In active development"}
+Akte is in active development, it's usable (this website is built with Akte), however consider pinning the patch version before using.
+:::
 
 A minimal file generator, for websites and more.
 
@@ -18,13 +20,37 @@ A minimal file generator, for websites and more.
 
 Akte offers a lightweight API to generate files that is portable and capable to run in various environments.
 
-- 🚕 &nbsp;Minimal and flexible
-- ⚡ &nbsp;Vite integration
-- 🛰 &nbsp;Serverless ready
-- 🎹 &nbsp;Programmatic API
-- 🌊 &nbsp;Controllable data cascade
-- 🗜 &nbsp;Tiny install, 600kB
-- 💼 &nbsp;Portable, 6kB bundle size
+:::callout{icon=🚕 title="Minimal and flexible"}
+Akte template literals-based rendering lets you perform any kind of string manipulation.
+:::
+
+:::callout{icon=⚡ title="Vite integration"}
+Take advantage of Vite development server and assets processing pipeline to enrich your app.
+:::
+
+:::callout{icon=🛰 title="Serverless ready"}
+Import your Akte app on your serverless handlers and run it intuitively.
+:::
+
+:::callout{icon=🎹 title="Programmatic API"}
+Manipulate your app with fine grain control through Akte programmatic API.
+:::
+
+:::callout{icon=🌊 title="Controllable data cascade"}
+Control data globally and on a per-file basis with single-file optimization available.
+:::
+
+:::callout{icon=🈂 title="TypeScript supercharged"}
+Types are inferred in most cases and controllable easily to prevent errors.
+:::
+
+:::callout{icon=🗜 title="Tiny install, 600kB"}
+Ensures fast installs and stup, see on [Package Phobia](https://packagephobia.com/result?p=akte).
+:::
+
+:::callout{icon=💼 title="Portable, 6kB bundle size"}
+Akte is fully tree-shakeable allowing for smooth run on constrained environment, see on [Bundle Phobia](https://bundlephobia.com/package/akte@0.1.0).
+:::
 
 ### Akte?
 
