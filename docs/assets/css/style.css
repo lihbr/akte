@@ -147,7 +147,7 @@ video {
 
 header, main, footer {
 	max-width: 40rem;
-	margin-left: clamp(0rem, 66.7vw - 38.3rem, calc(50vw - 20rem));
+	margin-left: clamp(0rem, 110vw - 66rem, calc(50vw - 22rem));
 }
 
 /* Header */
@@ -189,7 +189,7 @@ header a.active {
 
 nav.toc {
 	position: fixed;
-	left: clamp(44rem, 66.7vw - 38.3rem + 44rem, calc(50vw + 24rem));
+	left: clamp(44rem, 110vw - 66rem + 44rem, calc(50vw + 22rem));
 	top: 16.5rem;
 	bottom: 2rem;
 	right: 2rem;
