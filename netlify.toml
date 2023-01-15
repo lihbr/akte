@@ -6,9 +6,4 @@
 [[headers]]
 	for = "/assets/*"
 	[headers.value]
-	access-control-allow-origin = "*"
-
-[[headers]]
-	for = "/assets/*/*"
-	[headers.value]
-	access-control-allow-origin = "*"
+		access-control-allow-origin = "*"
