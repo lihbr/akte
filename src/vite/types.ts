@@ -23,7 +23,7 @@ export type Options<TGlobalData> = {
 	 *
 	 * You can use this option to provide additional parameters to
 	 * `html-minifier-terser`,
-	 * {@link https://github.com/terser/html-minifier-terser#minification-comparison see its documentation}.
+	 * {@link https://github.com/terser/html-minifier-terser#options-quick-reference see its documentation}.
 	 *
 	 * @remarks
 	 *   When enabled, `html-minifier-terser` needs to be installed separately as a

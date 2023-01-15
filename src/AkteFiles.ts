@@ -75,7 +75,7 @@ export type FilesDefinition<TGlobalData, TParams extends string[], TData> = {
 	bulkData?: FilesBulkDataFn<TGlobalData, TData>;
 
 	/**
-	 * A function responsible for rendering
+	 * A function responsible for rendering the file.
 	 *
 	 * @param context - Resolved file path, app global data, and data to render
 	 *   the file.
@@ -97,6 +97,7 @@ const debug = createDebugger("akte:files");
 const debugRender = createDebugger("akte:files:render");
 const debugCache = createDebugger("akte:files:cache");
 
+/** An Akte files, managing its data cascade and rendering process. */
 export class AkteFiles<
 	TGlobalData = unknown,
 	TParams extends string[] = string[],

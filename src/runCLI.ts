@@ -18,7 +18,7 @@ const displayHelp = (): void => {
   Akte CLI
 
   DOCUMENTATION
-    https://akte.lihbr.com
+    https://akte.js.org
 
   VERSION
     ${pkg.name}@${pkg.version}
