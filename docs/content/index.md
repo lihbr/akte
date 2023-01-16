@@ -6,7 +6,7 @@ toc: false
 # Akte
 
 :::callout{icon=⚠ title="In active development"}
-Akte is in active development, it's usable (this website is built with Akte), however consider pinning the patch version before using.
+Akte is in active development, it's usable (this website is built with Akte), however, consider pinning the patch version before using.
 :::
 
 A minimal file generator, for websites and more.
@@ -33,7 +33,7 @@ Import your Akte app on your serverless handlers and run it intuitively.
 :::
 
 :::callout{icon=🎹 title="Programmatic API"}
-Manipulate your app with fine grain control through Akte programmatic API.
+Manipulate your app with fine-grain control through Akte programmatic API.
 :::
 
 :::callout{icon=🌊 title="Controllable data cascade"}
@@ -45,11 +45,11 @@ Types are inferred in most cases and controllable easily to prevent errors.
 :::
 
 :::callout{icon=🗜 title="Tiny install, 600kB"}
-Ensures fast installs and stup, see on [Package Phobia](https://packagephobia.com/result?p=akte).
+Ensures fast installs and setup, see on [Package Phobia](https://packagephobia.com/result?p=akte).
 :::
 
 :::callout{icon=💼 title="Portable, 6kB bundle size"}
-Akte is fully tree-shakeable allowing for smooth run on constrained environment, see on [Bundle Phobia](https://bundlephobia.com/package/akte@0.1.0).
+Akte is fully tree-shakeable allowing for smooth runs in constrained environments, see on [Bundle Phobia](https://bundlephobia.com/package/akte@0.1.0).
 :::
 
 ### Akte?

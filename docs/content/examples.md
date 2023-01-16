@@ -16,8 +16,8 @@ This example shows basic usage of Akte with JavaScript or TypeScript. When execu
 [Check it out on GitHub ›](https://github.com/lihbr/akte/tree/master/examples/common/basic)
 :::
 
-:::callout{icon=⚾ title="Catch all" level=3}
-This example shows usage of catch all routes. This is helpful for rendering similar files that aren't living under the same hierachy.
+:::callout{icon=⚾ title="Catch-all" level=3}
+This example shows usage of catch-all routes. This is helpful for rendering similar files that aren't living under the same hierarchy.
 
 <br />
 

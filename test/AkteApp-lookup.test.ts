@@ -46,7 +46,7 @@ it("looks up regular paths with parameters", () => {
 	);
 });
 
-it("looks up catch all paths", () => {
+it("looks up catch-all paths", () => {
 	expect(app.lookup("/pages")).toStrictEqual(
 		expect.objectContaining({
 			file: pages,

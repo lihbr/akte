@@ -1,6 +1,6 @@
-# Catch All
+# Catch-All
 
-This example shows usage of catch all routes. This is helpful for rendering similarly files that aren't living under the same hierachy.
+This example shows usage of catch-all routes. This is helpful for rendering similarly files that aren't living under the same hierarchy.
 
 Running the `akte.app` file build command results in the Akte project being built under the `dist` folder.
 

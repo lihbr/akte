@@ -50,7 +50,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * allow vite plugin to minify generated HML ([298f22a](https://github.com/lihbr/akte/commit/298f22ab7bd52ed03d8e54f97bebf88b5a1b0b07))
 * basic vite support ([e8f641b](https://github.com/lihbr/akte/commit/e8f641b4864cf28d4d289f1e5ece8af133a92a92))
-* debug & catch all routes ([af5472a](https://github.com/lihbr/akte/commit/af5472a52122fc568d1e0c47a3962881fb14661a))
+* debug & catch-all routes ([af5472a](https://github.com/lihbr/akte/commit/af5472a52122fc568d1e0c47a3962881fb14661a))
 
 
 ### Bug Fixes

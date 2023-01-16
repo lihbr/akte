@@ -8,9 +8,9 @@ How to use Akte to achieve what you want.
 
 ## Defining files
 
-Files are the central part of Akte. You can define two kind of files.
+Files are the central part of Akte. You can define two kinds of files.
 - Single files like `/about` or `/sitemap.xml`
-- Collection of files like `/posts/:slug` or even catch all routes
+- Collection of files like `/posts/:slug` or even catch-all routes
 
 In any case, for files to be taken into account by your app, you need to register them in your `akte.app.ts` file.
 
@@ -69,7 +69,7 @@ const posts = defineAkteFiles().from({
 
 ## Routing
 
-Akte uses the `path` property of your file definitions to handle routing and define which path to generate. Route pattern and match algorythm are powered by [`radix3`](https://github.com/unjs/radix3).
+Akte uses the `path` property of your file definitions to handle routing and define which file to generate. Route patterns and matching algorithm are powered by [`radix3`](https://github.com/unjs/radix3).
 
 ### Static
 
@@ -93,9 +93,20 @@ Dynamic routes are meant to be used with collection of files.
 | `/posts/:slug`  | `/posts/qux`          | `/posts/qux.html`         |
 | `/api/:id.json` | `/api/quux.json`      | `/api/quux.json`          |
 
-### Catch all
+:::callout{icon=ℹ title="Typing path parameters"}
+You can type path parameters on your Akte files when defining them. This will enforce correct `path` value and type the `params` object of the `data` function.
 
-Catch all routes are also available for collection of files.
+```typescript
+defineAkteFiles<GlobalDataType, ["cat", "id"]>().from({
+	path: "/posts/:cat/:id",
+	/* ... */
+};
+```
+:::
+
+### Catch-all
+
+Catch-all routes are also available for collection of files.
 
 | `path` value    | Example route matched    | Example file generated   |
 | --------------- | ------------------------ | ------------------------ |
@@ -103,13 +114,13 @@ Catch all routes are also available for collection of files.
 | `/pages/**`     | `/pages/qux/quux`        | `/pages/qux/quux.html`   |
 | `/api/**.json`  | `/api/corge/grault.json` | `/api/corge/grault.json` |
 
-:::callout{icon=⚠ title="Catch all routes root"}
-Catch all routes also match the root of the catch all route, e.g. `/**` also matches `/` and `/pages/**` also matches `/pages`
+:::callout{icon=⚠ title="Catch-all routes root"}
+Catch-all routes will match the root of the catch-all route, e.g. `/**` also matches `/` and `/pages/**` also matches `/pages`
 :::
 
 ### Routing priority
 
-In some cases, you can end up with multiple files matching the same route (e.g. `/` and `/**` both match `/`). In such cases the priority is given to the file registered last within your Akte app configuration.
+In some cases, you can end up with multiple files matching the same route (e.g. `/` and `/**` both match `/`). When this happens, the priority is given to the file registered last within your Akte app configuration.
 
 ## Working with data
 
@@ -128,49 +139,85 @@ export const app = defineAkteApp({
 	files: [/* ... */],
 	globalData() {
 		// Fetch API, read files, etc.
-		return data;
+		return globalData;
 	},
 });
 ```
 
 ### Bulk data
 
-:::callout{icon=🚧 title="WIP"}
-This section is a work in progress.
-:::
-
 Bulk data defines all the data needed to render all files defined with `defineAkteFiles`. It's a function or an asynchronous function that returns a map of path and file data.
 
 ```typescript
-import { defineAkteFile } from "akte";
+import { defineAkteFiles } from "akte";
 
-export const app = defineAkteApp({
-	files: [/* ... */],
+const posts = defineAkteFiles().from({
+	path: "/posts/:slug",
 	bulkData(context) {
 		// Fetch API, read files, etc.
-		return data;
+		return bulkData;
+	},
+	render(context) {
+		return /* html */ `<h1>${context.path}</h1>`;
 	},
 });
 ```
 
+:::callout{icon=⚡ title="Optimize for performances"}
+While the `bulkData` function is at least necessary to define which files to render, it also exists to optimize build time. Most APIs allow you to query content in bulk, by doing so, less requests are made and build can be faster.
+:::
+
+#### Context
+
+`bulkData` functions all receive the same `context` argument, it contains:
+- `globalData`: application global data
+
+Use it as needed to compute your bulk data appropriately.
+
 ### Data
 
-:::callout{icon=🚧 title="WIP"}
-This section is a work in progress.
+Data defines the data needed to render a file at a given path defined with `defineAkteFile`. It's a function or an asynchronous function that returns the file data.
+
+```typescript
+import { defineAkteFile } from "akte";
+
+const about = defineAkteFile().from({
+	path: "/about",
+	data(context) {
+		// Fetch API, read files, etc.
+		return data;
+	},
+	render(context) {
+		return /* html */ `<h1>About</h1>`;
+	},
+});
+```
+
+:::callout{icon=⚡ title="Data with collection of files"}
+The `data` function can optionally be provided for files defined with `defineAkteFiles` (by default it is inferred from the files `bulkData` function). This allows to optimize the file rendering process during single renders, e.g. rendering on serverless environment.
 :::
+
+#### Context
+
+`data` functions all receive the same `context` argument, it contains:
+- `path`: the path of the rendered file
+- `params`: path parameters for collection of files
+- `globalData`: application global data
+
+Use it as needed to compute your bulk data appropriately.
 
 ## Rendering
 
-Akte uses your file `render` functions to render them as strings. These functions can be asynchronous, however it's recommended to keep async behaviors for `data` and `bulkData`.
+Akte uses your file `render` functions to render them as strings. These functions can be asynchronous, however, it's recommended to keep async behaviors within `data` and `bulkData`.
 
 ### Context
 
 `render` functions all receive the same `context` argument, it contains:
 - `path`: the path of the rendered file
 - `globalData`: application global data
-- `data`: data for this file, inferred from `data` or `bulkData`
+- `data`: data for this file, type is inferred from `data` or `bulkData`
 
-Use it to render your each of your files and returning it as a string.
+Use it to render each of your files appropriately.
 
 ### Templating
 
@@ -189,12 +236,12 @@ return /* html */ `<section>
 ```
 
 :::callout{icon=💡 title="Getting a better experience"}
-You can get HTML highlighting, autocompletion, intellisense and more for template literals by leveraging extensions like [`es6-string-html`](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) (that's why you've been seeing those `/* html */` comments)
+You can get HTML highlighting, autocompletion, IntelliSense, and more for template literals by leveraging extensions like [`es6-string-html`](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) (that's why you've been seeing those `/* html */` comments)
 :::
 
 #### Wrapping output
 
-Because rendering is all JavaScript based, you can create your own functions to make templating easier. For example you can wrap your output within a layout like so.
+Because rendering is all JavaScript based, you can create your own functions to make templating easier. For example, you can wrap your output within a layout like so.
 
 ```typescript
 const wrapInLayout = (slot: string): string => {
@@ -216,9 +263,29 @@ const wrapInLayout = (slot: string): string => {
 return wrapInLayout(/* html */ `...`);
 ```
 
+Or make some "components" of your own.
+
+```typescript
+const header = (args: { displayLogo?: boolean; }): string => {
+	return /* html */ `<header>
+	${args.displayLogo ? `<img src="/logo.svg" alt="logo" />`: ""}
+	<nav>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/posts">Blog</a></li>
+			<li><a href="/about">About</a></li>
+		</ul>
+	</nav>
+</header>`
+};
+
+// Later in your rendering function...
+return /* html */ `${header({ displayLogo: true })}...`;
+```
+
 ## Programmatic usage
 
-Your Akte app can be imported and used programatically. To do so, it exposes various methods you can use to achieve various goals, including serverless usage.
+Your Akte app can be imported and used programmatically. To do so, it exposes various methods you can use to achieve different goals, including serverless usage.
 
 ### Looking up a path
 
@@ -236,7 +303,7 @@ try {
 
 ### Rendering a path
 
-Pairing `lookup` with the `render` method allows you to render a path. The `render` method resolves global data and the file's data, caches them, and runs your file `render` function for the request path.
+Pairing `lookup` with the `render` method allows you to render a path. The `render` method resolves global data and the file's data, caches them, then runs your file `render` function for the request path.
 
 ```typescript
 import { app } from "./akte.app";
@@ -271,7 +338,7 @@ const files = await app.renderAll();
 await app.writeAll({ files });
 ```
 
-All files will by default be written to the app `build.outDir` directory which defaults to `dist`. When calling `writeAll` you can specify another directory.
+All files will, by default, be written to the app `build.outDir` directory which defaults to `dist`. When calling `writeAll` you can specify another directory.
 
 ```typescript
 import { app } from "./akte.app";
@@ -280,7 +347,7 @@ const files = await app.renderAll();
 await app.writeAll({ files, outDir: "out" });
 ```
 
-For convenience, the `buildAll` method is available. It renders and writes all files, and returns an array of file written.
+For convenience, the `buildAll` method is available. It renders and writes all files, then returns an array of files written.
 
 ```typescript
 import { app } from "./akte.app";
@@ -291,7 +358,7 @@ await app.buildAll({ files, outDir: "out" });
 
 ### Clearing cache
 
-Akte caches all `globalData`, `data`, `bulkData` calls for performance. The `clearCache` method allows you to clear these cache.
+Akte caches all `globalData`, `bulkData`, `data` calls for performance. The `clearCache` method allows you to clear these caches.
 
 ```typescript
 import { app } from "./akte.app";
@@ -305,7 +372,7 @@ app.clearCache(true);
 
 ## Debugging
 
-Akte reports on what its doing using the [`debug`](https://github.com/debug-js/debug) package. Track performances and debug your app by setting the `DEBUG` environment variable before running Akte.
+Akte reports on what it's doing using the [`debug`](https://github.com/debug-js/debug) package. Track performances and debug your app by setting the `DEBUG` environment variable before running Akte.
 
 ### Akte CLI
 

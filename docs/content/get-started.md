@@ -83,7 +83,7 @@ export default defineConfig({
 .akte
 ```
 
-You're ready to start developing your Akte app though Vite.
+You're ready to start developing your Akte app through Vite.
 
 ```bash
 npx vite
@@ -103,4 +103,4 @@ Well done! Whether you opted for the CLI or Vite, you're ready to start developi
 - [Check out the examples to get inspiration ›](/examples)
 
 [^1]: Akte also works with plain JavaScript! While most of the snippets in the documentation are TypeScript, don't be afraid of them. Everything works the same way or is indicated so when otherwise~
-[^2]: You can omit `html-minifier-terser` if you don't want HTML to be minified by Akte. You will need to disable explicitely the `minifyHTML` option of the Vite plugin, [see its configuration](/api#akte-plugin).
+[^2]: You can omit `html-minifier-terser` if you don't want HTML to be minified by Akte. You will need to disable explicitly the `minifyHTML` option of the Vite plugin, [see its configuration](/api#akte-plugin).

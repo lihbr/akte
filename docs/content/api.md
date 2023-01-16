@@ -50,24 +50,24 @@ Writes a map of rendered Akte files.
 
 ```typescript
 (args: {
-	outDir?: string; // Default to the app configured one, or `"dist"`
+	outDir?: string; // Defaults to the app configured one, or `"dist"`
 	files: Record<string, string>;
 }) => Promise<void>;
 ```
 
 #### `buildAll`
 
-Build (renders and write) all Akte files.
+Builds (renders and writes) all Akte files.
 
 ```typescript
 (args: {
-	outDir?: string; // Default to the app configured one, or `"dist"`
+	outDir?: string; // Defaults to the app configured one, or `"dist"`
 }) => Promise<string[]>; // Built files
 ```
 
 #### `clearCache`
 
-Akte caches all `globalData`, `data`, `bulkData` calls for performance. This method can be used to clear the cache.
+Akte caches all `globalData`, `bulkData`, `data` calls for performance. The `clearCache` method allows you to clear these caches.
 
 ```typescript
 // Only clears global data cache unless `true`

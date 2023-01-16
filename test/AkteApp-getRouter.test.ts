@@ -20,7 +20,7 @@ vi.mock("radix3", () => {
 	};
 });
 
-it("fixes catch all path", () => {
+it("fixes catch-all path", () => {
 	const app = defineAkteApp({
 		files: [pages],
 	});
