@@ -10,10 +10,15 @@ type Event<
 	TType = string,
 	TProps extends Record<string, string | number | boolean> | void = void,
 > = TProps extends void
-	? { event: TType; props?: Record<string, never> }
+	? {
+			event: TType;
+			props?: Record<string, never>;
+			data?: Record<string, unknown>;
+	  }
 	: {
 			event: TType;
 			props: TProps;
+			data?: Record<string, unknown>;
 	  };
 
 type PageViewEvent = Event<"pageView">;
@@ -28,15 +33,37 @@ const MachineToHumanEventTypes: Record<TrackEventArgs["event"], string> = {
 
 const trackEvent = (args: TrackEventArgs): Promise<void> => {
 	return new Promise((resolve) => {
-		plausible.trackEvent(MachineToHumanEventTypes[args.event], {
-			callback: resolve,
-			props: args.props,
-		});
+		plausible.trackEvent(
+			MachineToHumanEventTypes[args.event],
+			{
+				callback: resolve,
+				props: args.props,
+			},
+			args.data,
+		);
 	});
 };
 
 // Page view
-trackEvent({ event: "pageView" });
+if (location.host !== "akte.js.org") {
+	// Welcome page
+	if (document.title.toLowerCase().includes("welcome")) {
+		trackEvent({
+			event: "pageView",
+			data: {
+				u: "https://akte.js.org/welcome",
+				d: "akte.js.org",
+				r: null,
+				w: window.innerWidth,
+				h: 0,
+				p: undefined,
+			},
+		});
+	}
+} else {
+	// Documentation
+	trackEvent({ event: "pageView" });
+}
 
 // Outbound links (using custom solution because Plausible implementation has issues)
 document.querySelectorAll("a").forEach((node) => {
