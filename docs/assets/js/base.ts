@@ -51,12 +51,8 @@ if (location.host !== "akte.js.org") {
 		trackEvent({
 			event: "pageView",
 			data: {
-				u: "https://akte.js.org/welcome",
-				d: "akte.js.org",
-				r: null,
-				w: window.innerWidth,
-				h: 0,
-				p: undefined,
+				url: "https://akte.js.org/welcome",
+				domain: "akte.js.org",
 			},
 		});
 	}
