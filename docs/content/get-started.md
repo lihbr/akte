@@ -23,7 +23,7 @@ npm install --save-dev akte
 2. Create an `akte.app.ts`[^1] file
 
 ```typescript
-import { defineAkteFile } from "akte";
+import { defineAkteApp } from "akte";
 
 export const app = defineAkteApp({
 	files: [],

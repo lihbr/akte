@@ -15,7 +15,7 @@ Files are the central part of Akte. You can define two kinds of files.
 In any case, for files to be taken into account by your app, you need to register them in your `akte.app.ts` file.
 
 ```diff
-  import { defineAkteFile } from "akte";
+  import { defineAkteApp } from "akte";
 + import { foo } from "./foo"; // An Akte files
 
   export const app = defineAkteApp({
@@ -133,7 +133,7 @@ Akte works with two kinds of data:
 Global data are defined on your Akte app. It's a function or an asynchronous function that returns them.
 
 ```typescript
-import { defineAkteFile } from "akte";
+import { defineAkteApp } from "akte";
 
 export const app = defineAkteApp({
 	files: [/* ... */],
@@ -276,7 +276,7 @@ const header = (args: { displayLogo?: boolean; }): string => {
 			<li><a href="/about">About</a></li>
 		</ul>
 	</nav>
-</header>`
+</header>`;
 };
 
 // Later in your rendering function...
