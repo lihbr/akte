@@ -35,7 +35,7 @@ main {
 		font-size: 1.25rem;
 	}
 
-	& > p, & > blockquote, & > figure, & > ul, & > ol, & > .callout {
+	& > p, & > blockquote, & > figure, & > ul, & > ol, & > table, & > .callout {
 		margin-top: 1rem;
 	}
 
@@ -65,10 +65,29 @@ main {
 		color: var(--altForeground);
 	}
 
-	& h2 code, & h3 code, & h4 code, & p code, & li code {
+	& h2 code, & h3 code, & h4 code, & p code, & li code, & table code {
 		background: var(--altBackground);
 		padding: .25em;
 		margin: -.25em 0;
+	}
+
+	& table {
+		width: 100%;
+		border-collapse: collapse;
+
+		& th {
+			color: var(--flamingo);
+			text-align: left;
+			font-weight: 400;
+		}
+
+		& th, & td {
+			padding: .5rem 0;
+		}
+
+		& tbody tr {
+			border-top: 1px solid var(--dimmedForeground);
+		}
 	}
 
 	& figure.highlight {
@@ -101,12 +120,11 @@ main {
 	}
 
 	& a:has(code) {
-		text-decoration: none;
-
 		& code:hover, & code:focus {
 			color: var(--flamingo);
 		}
 	}
+
 
 	& a.button {
 		display: inline-block;

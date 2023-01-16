@@ -286,7 +286,7 @@ export class AkteApp<TGlobalData = unknown> {
 
 	/**
 	 * Akte caches all `globalData`, `data`, `bulkData` calls for performance.
-	 * This function can be used to clear the cache.
+	 * This method can be used to clear the cache.
 	 *
 	 * @param alsoClearFileCache - Also clear cache on all registered Akte files.
 	 * @experimental Programmatic API might still change not following SemVer.

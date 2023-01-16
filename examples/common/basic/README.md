@@ -1,6 +1,6 @@
 # Basic
 
-This example shows basic usage of Akte with JavaScript or TypeScript. When executed, an Akte config behaves as a minimal CLI. This is helpful for simple use cases.
+This example shows basic usage of Akte with JavaScript or TypeScript. When executed, an Akte app configuration behaves as a minimal CLI. This is helpful for simple use cases.
 
 Running either of the `akte.app` file build command results in the Akte project being built under the `dist` folder.
 

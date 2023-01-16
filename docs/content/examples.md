@@ -9,7 +9,7 @@ Here are some examples showcasing what Akte enables.
 ## Common
 
 :::callout{icon=👋 title="Basic" level=3}
-This example shows basic usage of Akte with JavaScript or TypeScript. When executed, an Akte config behaves as a minimal CLI. This is helpful for simple use cases.
+This example shows basic usage of Akte with JavaScript or TypeScript. When executed, an Akte app configuration behaves as a minimal CLI. This is helpful for simple use cases.
 
 <br />
 

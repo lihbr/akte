@@ -24,8 +24,8 @@ const displayHelp = (): void => {
     ${pkg.name}@${pkg.version}
 
   USAGE
-    $ node akte.config.js <command>
-    $ npx tsx akte.config.ts <command>
+    $ node akte.app.js <command>
+    $ npx tsx akte.app.ts <command>
 
   COMMANDS
     build          Build Akte to file system

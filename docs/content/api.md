@@ -67,7 +67,7 @@ Build (renders and write) all Akte files.
 
 #### `clearCache`
 
-Akte caches all `globalData`, `data`, `bulkData` calls for performance. This function can be used to clear the cache.
+Akte caches all `globalData`, `data`, `bulkData` calls for performance. This method can be used to clear the cache.
 
 ```typescript
 // Only clears global data cache unless `true`
@@ -256,32 +256,29 @@ type Options<TGlobalData> = {
 }
 ```
 
-*See `html-minifier-terser` [documentation](https://github.com/terser/html-minifier-terser#options-quick-reference) for available options.*
+*[See `html-minifier-terser` documentation](https://github.com/terser/html-minifier-terser#options-quick-reference) for available options.*
 
 ## CLI
 
 Akte integrates a small CLI for minimal use cases allowing you to build a given app without processing it through [Vite](#vite). The CLI can be run by executing your Akte app configuration.
 
+### Usage
+
 ```bash
-node akte.config.js
-npx tsx akte.config.ts
+node akte.app.js <command>
+npx tsx akte.app.ts <command>
 ```
 
-### `build` command
+### Commands
 
-Build the current Akte app.
+| Command | Description                |
+| ------- | -------------------------- |
+| `build` | Build the current Akte app |
 
 ### Flags
 
-#### `--silent`, `-s`
-
-Silence output.
-
-#### `--help`, `-h`
-
-Display help.
-
-#### `--version`, `-v`
-
-Display version.
-
+| Flag              | Description     |
+| ----------------- | --------------- |
+| `--silent`, `-s`  | Silence output  |
+| `--help`, `-h`    | Display help    |
+| `--version`, `-v` | Display version |

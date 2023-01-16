@@ -14,6 +14,7 @@ import rehypeStringify from "rehype-stringify";
 
 import { common, createStarryNight } from "@wooorm/starry-night";
 import ignoreGrammar from "@wooorm/starry-night/lang/source.gitignore";
+import tsxGrammar from "@wooorm/starry-night/lang/source.tsx";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
@@ -21,7 +22,11 @@ import type { ElementContent, Root as HRoot } from "hast";
 import type { Content, Root as MDRoot } from "mdast";
 
 const rehypeStarryNight: Plugin<[], HRoot> = () => {
-	const starryNightPromise = createStarryNight([...common, ignoreGrammar]);
+	const starryNightPromise = createStarryNight([
+		...common,
+		ignoreGrammar,
+		tsxGrammar,
+	]);
 	const prefix = "language-";
 
 	return async (tree) => {

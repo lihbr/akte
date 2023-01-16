@@ -45,8 +45,8 @@ Akte CLI is minimal and only allows you to build your Akte app. Use it over Vite
 To run Akte CLI and build your app, just execute your `akte.app.ts` file.
 
 ```bash
-node akte.config.js build
-npx tsx akte.config.ts build
+node akte.app.js build
+npx tsx akte.app.ts build
 ```
 
 Your built app will be available in the `dist` directory.
