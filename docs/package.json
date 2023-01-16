@@ -16,6 +16,7 @@
 		"hast-util-to-string": "^2.0.0",
 		"hastscript": "^7.2.0",
 		"mdast": "^3.0.0",
+		"plausible-tracker": "^0.3.8",
 		"rehype-autolink-headings": "^6.1.1",
 		"rehype-slug": "^5.1.0",
 		"rehype-stringify": "^9.0.3",

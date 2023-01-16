@@ -8,3 +8,16 @@
 	[headers.values]
 		access-control-allow-origin = "*"
 
+# Netlify domain
+[[redirects]]
+	from = "https://akte.netlify.app/*"
+	to = "https://akte.js.org/:splat"
+	status = 301
+	force = true
+
+# Analytics
+[[redirects]]
+	from = "/p7e/api/event"
+	to = "https://plausible.io/api/event"
+	status = 202
+	force = true

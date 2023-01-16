@@ -1,2 +1,64 @@
-// eslint-disable-next-line no-console
-console.log("Hello Akte + Vite");
+import Plausible from "plausible-tracker";
+
+const plausible = Plausible({
+	domain: "akte.js.org",
+	trackLocalhost: true,
+	apiHost: "https://akte.js.org/p7e",
+});
+
+type Event<
+	TType = string,
+	TProps extends Record<string, string | number | boolean> | void = void,
+> = TProps extends void
+	? { event: TType; props?: Record<string, never> }
+	: {
+			event: TType;
+			props: TProps;
+	  };
+
+type PageViewEvent = Event<"pageView">;
+type OutboundLinkClickEvent = Event<"outboundLink:click", { url: string }>;
+
+type TrackEventArgs = PageViewEvent | OutboundLinkClickEvent;
+
+const MachineToHumanEventTypes: Record<TrackEventArgs["event"], string> = {
+	"pageView": "pageview",
+	"outboundLink:click": "Outbound Link: Click",
+};
+
+const trackEvent = (args: TrackEventArgs): Promise<void> => {
+	return new Promise((resolve) => {
+		plausible.trackEvent(MachineToHumanEventTypes[args.event], {
+			callback: resolve,
+			props: args.props,
+		});
+	});
+};
+
+// Page view
+trackEvent({ event: "pageView" });
+
+// Outbound links (using custom solution because Plausible implementation has issues)
+document.querySelectorAll("a").forEach((node) => {
+	if (node.host !== location.host) {
+		const trackOutboundLink = (event: MouseEvent) => {
+			trackEvent({
+				event: "outboundLink:click",
+				props: { url: node.href },
+			});
+
+			if (!node.target) {
+				event.preventDefault();
+				setTimeout(() => {
+					location.href = node.href;
+				}, 150);
+			}
+		};
+		node.addEventListener("click", trackOutboundLink);
+		node.addEventListener("auxclick", (event) => {
+			if (event.button === 1) {
+				trackOutboundLink(event);
+			}
+		});
+	}
+});

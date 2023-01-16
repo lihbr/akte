@@ -72,6 +72,7 @@ export const pages = defineAkteFiles<{ version: string }>().from({
 			<hr />
 			<p>
 				<a href="https://github.com/lihbr/akte" target="_blank" rel="noopener noreferrer">GitHub</a> - <a href="https://twitter.com/li_hbr" target="_blank" rel="noopener noreferrer">Twitter</a> - <a href="https://mastodon.social/@lihbr" target="_blank" rel="noopener noreferrer">Mastodon</a>
+				<a href="https://plausible.io/akte.js.org" target="_blank" rel="noopener noreferrer" style="float:right;">Analytics</a>
 			</p>
 			<br />
 			<p>© 2023-present Lucie Haberer - MIT License</p>
