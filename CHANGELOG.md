@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/lihbr/akte/compare/v0.1.0...v0.2.0) (2023-01-17)
+
+
+### Features
+
+* welcome page ([e744fc7](https://github.com/lihbr/akte/commit/e744fc7b77ca5e2333d1453079d09a3f09f0ac34))
+
+
+### Bug Fixes
+
+* **vite:** don't build app upon preview ([48305af](https://github.com/lihbr/akte/commit/48305afffd816db68fefe1bf0c540d8fad4e8d46))
+* welcome page ([7e8ffd3](https://github.com/lihbr/akte/commit/7e8ffd3041ed374cd9e832e231aa9c07ef4b5cb8))
+
+
+### Chore
+
+* add missing tsconfig ([b04854f](https://github.com/lihbr/akte/commit/b04854f694fd8b28a4d68e807a94735139a4c23d))
+
+
+### Documentation
+
+* `/get-started`, `/api`, `/404`, `/sitemap.xml` ([fb51f5c](https://github.com/lihbr/akte/commit/fb51f5c451f13bfcdb395f859522642513855548))
+* finalize doc ([a2ca0f8](https://github.com/lihbr/akte/commit/a2ca0f88fe651f4ac921b524d37e2ff88022021e))
+* fix alignement ([67289b6](https://github.com/lihbr/akte/commit/67289b64cb8bba7b8a168120fce7c1591b5c266f))
+* fix plausible ([7f64499](https://github.com/lihbr/akte/commit/7f64499bd64760b03baf5696fadd85ceb4168ab7))
+* fix plausible ([d2cc326](https://github.com/lihbr/akte/commit/d2cc32680f3f333f1da146e4ec3c9f803e16e92c))
+* get started and examples page ([1e5a91b](https://github.com/lihbr/akte/commit/1e5a91b2189cdba7b4003703b38e6741238d1fba))
+* guide section ([7ef5112](https://github.com/lihbr/akte/commit/7ef5112712a865052adc53e14f39e194fa174c8d))
+* improve example navigation ([d0a3039](https://github.com/lihbr/akte/commit/d0a303924dd16a67e143cabd174b806c7f8bff61))
+* missing gitignore mention ([d27cb97](https://github.com/lihbr/akte/commit/d27cb97aa155c81a8c925953a9141af10819f805))
+* plug plausible ([ce47301](https://github.com/lihbr/akte/commit/ce473016c3411b6adbd349b7f7527814553a5fdf))
+* refactor examples ([ab798c8](https://github.com/lihbr/akte/commit/ab798c81ca61e4da803246e498a8b71412636e43))
+* typos (wrong imports) ([e0ff703](https://github.com/lihbr/akte/commit/e0ff7031330ae551840f5032a0bd5b4431a8493f))
+* update tsdocs ([7fcbb2c](https://github.com/lihbr/akte/commit/7fcbb2cc9d95e11789fcb2b3ceccf8e7c304bd8b))
+* work on documentation website ([dfc5247](https://github.com/lihbr/akte/commit/dfc52472d359678543b29a3892afd02bf0632138))
+
 ## [0.1.0](https://github.com/lihbr/akte/compare/v0.0.3...v0.1.0) (2023-01-11)
 
 
