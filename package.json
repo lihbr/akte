@@ -1,7 +1,7 @@
 {
 	"name": "akte",
 	"version": "0.2.0",
-	"description": "Minimal file generator, for websites and more",
+	"description": "A minimal static site (and file) generator",
 	"keywords": [
 		"typescript",
 		"lihbr"

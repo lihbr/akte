@@ -8,7 +8,7 @@ export const base = (
 	const docURL = "https://akte.js.org";
 	const title = args.title ? `Akte - ${args.title}` : "Akte";
 	const description =
-		"A minimal file generator, for websites and more. Akte's minimal API allows it to be portable and to run in various environments, from CIs, to serverless.";
+		"Akte is a minimal file generator to make websites with an integrated data cascade. It integrates with Vite, has serverless capabilities, and is all nicely typed~";
 
 	return /* html */ `<!doctype html>
 <html lang="en">

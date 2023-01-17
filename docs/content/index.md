@@ -1,5 +1,5 @@
 ---
-title: Minimal file generator, for websites and more
+title: A minimal static site (and file) generator
 toc: false
 ---
 
@@ -9,7 +9,7 @@ toc: false
 Akte is in active development, it's usable (this website is built with Akte), however, consider pinning the patch version before using.
 :::
 
-A minimal file generator, for websites and more.
+A minimal static site (and file) generator.
 
 <div style="margin:4rem 0;display:flex;justify-content:center;gap:1rem;">
 	<a class="button" href="/get-started">Get started ›</a>
@@ -18,10 +18,10 @@ A minimal file generator, for websites and more.
 
 ## Overview
 
-Akte offers a lightweight API to generate files that is portable and capable to run in various environments.
+Akte offers a lightweight API to generate files (e.g. `/about`, `/sitemap.xml`, `/post/:slug`, etc.) that is portable and capable to run in various environments.
 
 :::callout{icon=🚕 title="Minimal and flexible"}
-Akte template literals-based rendering lets you perform any kind of string manipulation.
+Akte template literals-based rendering lets you perform any kind of string manipulation when rendering files.
 :::
 
 :::callout{icon=⚡ title="Vite integration"}

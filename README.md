@@ -16,7 +16,7 @@
 > **Warning**
 > Akte is in active development, it's usable, however, consider pinning the patch version before using.
 
-Minimal file generator, for websites and more.
+A minimal static site (and file) generator.
 
 - 🚕 &nbsp;Minimal and flexible;
 - ⚡ &nbsp;Vite integration;
