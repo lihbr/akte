@@ -57,6 +57,8 @@ export const buildPlugin = <TGlobalData>(
 				};
 
 				debug("updated rollup config");
+
+				return;
 			}
 
 			const then = performance.now();
