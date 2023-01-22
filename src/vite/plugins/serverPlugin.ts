@@ -27,8 +27,8 @@ export const serverPlugin = <TGlobalData>(
 			const proxy = httpProxy.createProxyServer();
 
 			server.middlewares.use(async (req, res, next) => {
-				const path = req.url || "";
-				const filePath = pathToFilePath(path.split("?").shift() || "");
+				const path = req.url?.split("?").shift() || "";
+				const filePath = pathToFilePath(path);
 
 				// Skipping obvious unrelated paths
 				if (
