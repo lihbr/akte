@@ -4,7 +4,7 @@
 	"description": "A minimal static site (and file) generator",
 	"keywords": [
 		"typescript",
-		"lihbr"
+		"akte"
 	],
 	"repository": {
 		"type": "git",
