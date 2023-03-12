@@ -3,7 +3,8 @@ import { type Plugin, type Processor, unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
-import { type VFile, matter } from "vfile-matter";
+import type { VFile } from "vfile";
+import { matter } from "vfile-matter";
 import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
 
@@ -117,7 +118,9 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 							const data = node.data || (node.data = {});
 							const tagName =
 								node.type === "textDirective" ? "span" : "article";
-							const properties = h(tagName, node.attributes).properties || {};
+							const properties =
+								h(tagName, node.attributes as Record<string, string>)
+									.properties || {};
 							properties.className ||= [];
 							(properties.className as string[]).push("callout");
 

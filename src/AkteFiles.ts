@@ -4,11 +4,11 @@ import { type Awaitable } from "./types";
 import { createDebugger } from "./lib/createDebugger";
 import { pathToFilePath } from "./lib/pathToFilePath";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports */
 
 import type { AkteApp } from "./AkteApp";
 
-/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports */
 
 type Path<
 	TParams extends string[],

@@ -10,13 +10,13 @@
 	},
 	"dependencies": {
 		"@prismicio/client": "^7.0.0-alpha.0",
-		"node-fetch": "^3.3.0"
+		"node-fetch": "^3.3.1"
 	},
 	"devDependencies": {
 		"akte": "file:../",
 		"cross-env": "^7.0.3",
 		"html-minifier-terser": "^7.1.0",
-		"tsx": "^3.12.2",
-		"vite": "^4.0.4"
+		"tsx": "^3.12.4",
+		"vite": "^4.1.4"
 	}
 }

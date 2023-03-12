@@ -14,12 +14,12 @@ import { createDebugger } from "./lib/createDebugger";
 import { pathToRouterPath } from "./lib/pathToRouterPath";
 import { isCLI } from "./lib/isCLI";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports */
 
 import type { defineAkteFile } from "./defineAkteFile";
 import type { defineAkteFiles } from "./defineAkteFiles";
 
-/* eslint-enable @typescript-eslint/no-unused-vars */
+/* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports */
 
 /** Akte app configuration object. */
 export type Config<TGlobalData> = {
