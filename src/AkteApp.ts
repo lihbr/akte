@@ -72,6 +72,11 @@ const debugCache = createDebugger("akte:app:cache");
 export class AkteApp<TGlobalData = unknown> {
 	protected config: Config<TGlobalData>;
 
+	// TODO: TSDocs
+	get files(): AkteFiles<TGlobalData>[] {
+		return this.config.files;
+	}
+
 	constructor(config: Config<TGlobalData>) {
 		if (!__PRODUCTION__) {
 			if (config.files.length === 0 && akteWelcome) {
@@ -129,18 +134,19 @@ export class AkteApp<TGlobalData = unknown> {
 	async render(
 		match: MatchedRoute<{
 			file: AkteFiles<TGlobalData>;
-		}> & { path: string },
+		}> & { path: string; globalData?: TGlobalData; data?: unknown },
 	): Promise<string> {
 		debugRender("rendering %o...", match.path);
 
 		const params: Record<string, string> = match.params || {};
-		const globalData = await this.getGlobalDataPromise();
+		const globalData = match.globalData || (await this.getGlobalData());
 
 		try {
 			const content = await match.file.render({
 				path: match.path,
 				params,
 				globalData,
+				data: match.data,
 			});
 
 			debugRender("rendered %o", match.path);
@@ -166,7 +172,7 @@ export class AkteApp<TGlobalData = unknown> {
 	async renderAll(): Promise<Record<string, string>> {
 		debugRender("rendering all files...");
 
-		const globalData = await this.getGlobalDataPromise();
+		const globalData = await this.getGlobalData();
 
 		const renderAll = async (
 			akteFiles: AkteFiles<TGlobalData>,
@@ -294,7 +300,7 @@ export class AkteApp<TGlobalData = unknown> {
 	clearCache(alsoClearFileCache = false): void {
 		debugCache("clearing...");
 
-		this._globalDataPromise = undefined;
+		this._globalDataCache = undefined;
 		this._router = undefined;
 
 		if (alsoClearFileCache) {
@@ -306,9 +312,16 @@ export class AkteApp<TGlobalData = unknown> {
 		debugCache("cleared");
 	}
 
-	private _globalDataPromise: Awaitable<TGlobalData> | undefined;
-	protected getGlobalDataPromise(): Awaitable<TGlobalData> {
-		if (!this._globalDataPromise) {
+	// TODO: TSDocs
+	get globalDataCache(): Awaitable<TGlobalData> | undefined {
+		return this._globalDataCache;
+	}
+
+	private _globalDataCache: Awaitable<TGlobalData> | undefined;
+
+	// TODO: TSDocs
+	getGlobalData(): Awaitable<TGlobalData> {
+		if (!this._globalDataCache) {
 			debugCache("retrieving global data...");
 			const globalDataPromise =
 				this.config.globalData?.() ?? (undefined as TGlobalData);
@@ -321,12 +334,12 @@ export class AkteApp<TGlobalData = unknown> {
 				debugCache("retrieved global data");
 			}
 
-			this._globalDataPromise = globalDataPromise;
+			this._globalDataCache = globalDataPromise;
 		} else {
 			debugCache("using cached global data");
 		}
 
-		return this._globalDataPromise;
+		return this._globalDataCache;
 	}
 
 	private _router:

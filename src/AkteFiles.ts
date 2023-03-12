@@ -122,8 +122,9 @@ export class AkteFiles<
 		path: string;
 		params: Record<TParams[number], string>;
 		globalData: TGlobalData;
+		data?: TData;
 	}): Promise<string> {
-		const data = await this.getDataPromise(args);
+		const data = args.data || (await this.getData(args));
 
 		return this.definition.render({
 			path: args.path,
@@ -144,7 +145,7 @@ export class AkteFiles<
 
 		debugRender("rendering files... %o", this.path);
 
-		const bulkData = await this.getBulkDataPromise(args);
+		const bulkData = await this.getBulkData(args);
 
 		const render = async (
 			path: string,
@@ -181,16 +182,20 @@ export class AkteFiles<
 
 	/** @internal Prefer {@link AkteApp.clearCache} or use at your own risks. */
 	clearCache(): void {
-		this._dataPromiseMap = new Map();
-		this._bulkDataPromise = undefined;
+		this._dataMapCache.clear();
+		this._bulkDataCache = undefined;
 	}
 
-	private _dataPromiseMap: Map<string, Awaitable<TData>> = new Map();
+	// TODO: TSDocs + freeze map(?)
+	get dataMapCache(): Map<string, Awaitable<TData>> {
+		return this._dataMapCache;
+	}
 
-	protected getDataPromise: FilesDataFn<TGlobalData, TParams, TData> = (
-		context,
-	) => {
-		const maybePromise = this._dataPromiseMap.get(context.path);
+	private _dataMapCache: Map<string, Awaitable<TData>> = new Map();
+
+	// TODO: TSDocs
+	getData: FilesDataFn<TGlobalData, TParams, TData> = (context) => {
+		const maybePromise = this._dataMapCache.get(context.path);
 		if (maybePromise) {
 			debugCache("using cached data %o", context.path);
 
@@ -204,8 +209,7 @@ export class AkteFiles<
 			promise = this.definition.data(context);
 		} else if (this.definition.bulkData) {
 			const dataFromBulkData = async (path: string): Promise<TData> => {
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				const bulkData = await this.definition.bulkData!({
+				const bulkData = await this.getBulkData({
 					globalData: context.globalData,
 				});
 
@@ -233,17 +237,21 @@ export class AkteFiles<
 			debugCache("retrieved data %o", context.path);
 		}
 
-		this._dataPromiseMap.set(context.path, promise);
+		this._dataMapCache.set(context.path, promise);
 
 		return promise;
 	};
 
-	private _bulkDataPromise: Awaitable<Record<string, TData>> | undefined;
+	// TODO: TSDocs
+	get bulkDataCache(): Awaitable<Record<string, TData>> | undefined {
+		return this._bulkDataCache;
+	}
 
-	protected getBulkDataPromise: FilesBulkDataFn<TGlobalData, TData> = (
-		context,
-	) => {
-		if (!this._bulkDataPromise) {
+	private _bulkDataCache: Awaitable<Record<string, TData>> | undefined;
+
+	// TODO: TSDocs
+	getBulkData: FilesBulkDataFn<TGlobalData, TData> = (context) => {
+		if (!this._bulkDataCache) {
 			debugCache("retrieving bulk data... %o", this.path);
 
 			const bulkDataPromise =
@@ -257,11 +265,11 @@ export class AkteFiles<
 				debugCache("retrieved bulk data %o", this.path);
 			}
 
-			this._bulkDataPromise = bulkDataPromise;
+			this._bulkDataCache = bulkDataPromise;
 		} else {
 			debugCache("using cached bulk data %o", this.path);
 		}
 
-		return this._bulkDataPromise;
+		return this._bulkDataCache;
 	};
 }
