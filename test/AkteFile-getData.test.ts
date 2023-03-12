@@ -13,10 +13,8 @@ it("caches data", () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	files.getDataPromise({ path: "/foo" });
-	// @ts-expect-error - Accessing protected method
-	files.getDataPromise({ path: "/foo" });
+	files.getData({ path: "/foo", params: {}, globalData: {} });
+	files.getData({ path: "/foo", params: {}, globalData: {} });
 
 	expect(dataFn).toHaveBeenCalledOnce();
 });
@@ -32,10 +30,8 @@ it("caches data promise", async () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	await files.getDataPromise({ path: "/foo" });
-	// @ts-expect-error - Accessing protected method
-	await files.getDataPromise({ path: "/foo" });
+	await files.getData({ path: "/foo", params: {}, globalData: {} });
+	await files.getData({ path: "/foo", params: {}, globalData: {} });
 
 	expect(dataFn).toHaveBeenCalledOnce();
 });
@@ -53,8 +49,7 @@ it("infers data from bulk data when data is not implemented", async () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	await files.getDataPromise({ path: "/foo" });
+	await files.getData({ path: "/foo", params: {}, globalData: {} });
 
 	expect(bulkDataFn).toHaveBeenCalledOnce();
 });
@@ -67,9 +62,8 @@ it("throws when neither data and bulk data are implemented", () => {
 		},
 	});
 
-	expect(
-		// @ts-expect-error - Accessing protected method
-		() => files.getDataPromise({ path: "/foo" }),
+	expect(() =>
+		files.getData({ path: "/foo", params: {}, globalData: {} }),
 	).toThrowErrorMatchingInlineSnapshot(
 		'"Cannot render file for path `/foo`, no `data` or `bulkData` function available"',
 	);

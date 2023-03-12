@@ -15,10 +15,8 @@ it("caches bulk data", () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	files.getBulkDataPromise({});
-	// @ts-expect-error - Accessing protected method
-	files.getBulkDataPromise({});
+	files.getBulkData({ globalData: {} });
+	files.getBulkData({ globalData: {} });
 
 	expect(bulkDataFn).toHaveBeenCalledOnce();
 });
@@ -38,10 +36,8 @@ it("caches bulk data promise", async () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	await files.getBulkDataPromise({});
-	// @ts-expect-error - Accessing protected method
-	await files.getBulkDataPromise({});
+	await files.getBulkData({ globalData: {} });
+	await files.getBulkData({ globalData: {} });
 
 	expect(bulkDataFn).toHaveBeenCalledOnce();
 });
@@ -57,8 +53,7 @@ it("infers bulk data from data on single file", async () => {
 		},
 	});
 
-	// @ts-expect-error - Accessing protected method
-	await files.getBulkDataPromise({});
+	await files.getBulkData({ globalData: {} });
 
 	expect(dataFn).toHaveBeenCalledOnce();
 });

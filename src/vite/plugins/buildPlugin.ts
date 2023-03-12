@@ -6,6 +6,7 @@ import { existsSync } from "node:fs";
 import type { Plugin } from "vite";
 
 import type { ResolvedOptions } from "../types";
+import { createAkteViteCache } from "../createAkteViteCache";
 import { pkg } from "../../lib/pkg";
 import { createDebugger } from "../../lib/createDebugger";
 
@@ -18,7 +19,7 @@ export const buildPlugin = <TGlobalData>(
 ): Plugin | null => {
 	debug("plugin registered");
 
-	let cacheDirPath = resolve(options.cacheDir);
+	let cache = createAkteViteCache(resolve(options.cacheDir));
 	let relativeFilePaths: string[] = [];
 	let outDir = "dist";
 
@@ -41,10 +42,12 @@ export const buildPlugin = <TGlobalData>(
 			userConfig.build ||= {};
 			userConfig.build.rollupOptions ||= {};
 
-			cacheDirPath = resolve(userConfig.root || ".", options.cacheDir);
+			cache = createAkteViteCache(
+				resolve(userConfig.root || ".", options.cacheDir),
+			);
 
 			// Don't build full app directly in dev mode
-			const indexHTMLPath = resolve(cacheDirPath, "index.html");
+			const indexHTMLPath = resolve(cache.dir.render, "index.html");
 			if (
 				env.mode === "development" &&
 				env.command === "serve" &&
@@ -63,32 +66,54 @@ export const buildPlugin = <TGlobalData>(
 
 			const then = performance.now();
 			const filePaths = await options.app.buildAll({
-				outDir: cacheDirPath,
+				outDir: cache.dir.render,
 			});
 			const buildTime = Math.ceil(performance.now() - then);
+
+			debug.log(`akte/vite v${pkg.version} built in ${buildTime}ms`);
 
 			relativeFilePaths = filePaths.map((filePath) =>
 				filePath.replace(/^\.?\//, ""),
 			);
 
-			debug.log(`akte/vite v${pkg.version} built in ${buildTime}ms`);
-
 			const input: Record<string, string> = {};
 			for (const filePath of relativeFilePaths) {
 				if (filePath.endsWith(".html")) {
-					input[filePath] = resolve(cacheDirPath, filePath);
+					input[filePath] = resolve(cache.dir.render, filePath);
 					debug(
 						"registered %o as rollup input",
-						posix.join(userConfig.root || ".", options.cacheDir, filePath),
+						posix.join(
+							userConfig.root?.replaceAll("\\", "/") || ".",
+							options.cacheDir,
+							"render",
+							filePath,
+						),
 					);
 				}
 			}
 
 			userConfig.build.rollupOptions.input = input;
 
-			isServerRestart = true;
-
 			debug("updated rollup config");
+
+			if (env.mode === "development") {
+				debug("caching globalData, bulkData, and data...");
+
+				const cachingPromises: Promise<void>[] = [];
+
+				const globalData = await options.app.globalDataCache;
+				cachingPromises.push(cache.setAppGlobalData(globalData));
+
+				for (const file of options.app.files) {
+					cachingPromises.push(cache.setFileDataMap(file));
+				}
+
+				await Promise.all(cachingPromises);
+
+				debug("cached globalData, bulkData, and data");
+			}
+
+			isServerRestart = true;
 
 			return userConfig;
 		},
@@ -161,7 +186,7 @@ export const buildPlugin = <TGlobalData>(
 			debug("copying non-html files to output directory...");
 
 			const copy = async (filePath: string): Promise<void> => {
-				const src = resolve(cacheDirPath, filePath);
+				const src = resolve(cache.dir.render, filePath);
 				const dest = resolve(outDir, filePath);
 				const destDir = dirname(dest);
 

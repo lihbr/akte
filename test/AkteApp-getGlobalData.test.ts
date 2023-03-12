@@ -16,10 +16,8 @@ it("caches global data", async () => {
 		globalData: globalDataFn,
 	});
 
-	// @ts-expect-error - Accessing protected method
-	app.getGlobalDataPromise();
-	// @ts-expect-error - Accessing protected method
-	app.getGlobalDataPromise();
+	app.getGlobalData();
+	app.getGlobalData();
 
 	expect(globalDataFn).toHaveBeenCalledOnce();
 });
@@ -32,10 +30,8 @@ it("caches global data promise", async () => {
 		globalData: globalDataFn,
 	});
 
-	// @ts-expect-error - Accessing protected method
-	app.getGlobalDataPromise();
-	// @ts-expect-error - Accessing protected method
-	app.getGlobalDataPromise();
+	app.getGlobalData();
+	app.getGlobalData();
 
 	expect(globalDataFn).toHaveBeenCalledOnce();
 });
