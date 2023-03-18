@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/lihbr/akte/compare/v0.2.0...v0.3.0) (2023-03-18)
+
+
+### Features
+
+* expose `files` and various memory cache ([af6021a](https://github.com/lihbr/akte/commit/af6021a5c59af83c4430f9d4424d1419ead7939f))
+
+
+### Bug Fixes
+
+* prevent dual cache revalidation ([da3af4e](https://github.com/lihbr/akte/commit/da3af4e1237fa5ba32b82525df0811242119fc87))
+* **vite:** actually skip full build on restart ([98182c0](https://github.com/lihbr/akte/commit/98182c017084fe8f156b3de1a516d1277fcc38c4))
+* **vite:** strip query parameters from path ([af8ed28](https://github.com/lihbr/akte/commit/af8ed280f8b0359444bfd626a82fcef6506e183f))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([448e151](https://github.com/lihbr/akte/commit/448e151c5595af4da6e2332025d1cd5f27f5d805))
+* package keywords ([51f3ca7](https://github.com/lihbr/akte/commit/51f3ca7db50d38f8c20af3ac52da856e796a0627))
+
+
+### Documentation
+
+* enhanced programmatic cache API ([62528f0](https://github.com/lihbr/akte/commit/62528f014e5da33d9ee6901c89f2e034930f9d78))
+* refine copy for clarity ([615baeb](https://github.com/lihbr/akte/commit/615baebc878de41262a31537d2e5e85a168a8f27))
+* wrong stackblitz url ([a961ca0](https://github.com/lihbr/akte/commit/a961ca0b72b0c058f13fd7bf5e262fdd36ddc2dc))
+
 ## [0.2.0](https://github.com/lihbr/akte/compare/v0.1.0...v0.2.0) (2023-01-17)
 
 
