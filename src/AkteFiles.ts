@@ -115,7 +115,7 @@ export class AkteFiles<
 	constructor(definition: FilesDefinition<TGlobalData, TParams, TData>) {
 		this.definition = definition;
 
-		debug("created %o", this.path);
+		debug("defined %o", this.path);
 	}
 
 	/** @internal Prefer {@link AkteApp.render} or use at your own risks. */

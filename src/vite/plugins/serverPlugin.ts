@@ -142,8 +142,11 @@ export const serverPlugin = <TGlobalData>(
 					target: `http://${req.headers.host}/${options.cacheDir}/render`,
 				});
 
-				// Revalidate cache if cache was used
-				if (match.globalData || match.data) {
+				// Revalidate cache on non-fetch requests if cache was used
+				if (
+					req.headers["sec-fetch-dest"] === "empty" &&
+					(match.globalData || match.data)
+				) {
 					revalidateCache(match);
 				}
 			});

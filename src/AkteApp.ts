@@ -90,7 +90,7 @@ export class AkteApp<TGlobalData = unknown> {
 
 		this.config = config;
 
-		debug("created with %o files", this.config.files.length);
+		debug("defined with %o files", this.config.files.length);
 
 		if (isCLI) {
 			runCLI(this as AkteApp);
