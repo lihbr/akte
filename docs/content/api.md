@@ -16,6 +16,14 @@ Only the type is exported, to create an instance of `AkteApp`, see [`defineAkteA
 
 An Akte app, ready to be interacted with.
 
+#### `files`
+
+Readonly array of Akte files registered within the app.
+
+```typescript
+AkteFiles[];
+```
+
 #### `lookup`
 
 Looks up the Akte file responsible for rendering the path.
@@ -72,6 +80,22 @@ Akte caches all `globalData`, `bulkData`, `data` calls for performance. The `cle
 ```typescript
 // Only clears global data cache unless `true`
 (alsoClearFileCache?: boolean) => void;
+```
+
+#### `globalDataCache`
+
+Readonly cache of the app's definition `globalData` method.
+
+```typescript
+Awaitable<TGlobalData> | undefined;
+```
+
+#### `getGlobalData`
+
+Retrieves data from the app's definition `globalData` method.
+
+```typescript
+() => Awaitable<TGlobalData>;
 ```
 
 ### `AkteFiles`

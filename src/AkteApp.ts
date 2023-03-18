@@ -72,7 +72,11 @@ const debugCache = createDebugger("akte:app:cache");
 export class AkteApp<TGlobalData = unknown> {
 	protected config: Config<TGlobalData>;
 
-	// TODO: TSDocs
+	/**
+	 * Readonly array of {@link AkteFiles} registered within the app.
+	 *
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	get files(): AkteFiles<TGlobalData>[] {
 		return this.config.files;
 	}
@@ -312,14 +316,25 @@ export class AkteApp<TGlobalData = unknown> {
 		debugCache("cleared");
 	}
 
-	// TODO: TSDocs
+	/**
+	 * Readonly cache of the app's definition `globalData` method.
+	 *
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	get globalDataCache(): Awaitable<TGlobalData> | undefined {
 		return this._globalDataCache;
 	}
 
 	private _globalDataCache: Awaitable<TGlobalData> | undefined;
 
-	// TODO: TSDocs
+	/**
+	 * Retrieves data from the app's definition `globalData` method.
+	 *
+	 * @param context - Context to get global data with.
+	 * @returns Retrieved global data.
+	 * @remark Returned global data may come from cache.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	getGlobalData(): Awaitable<TGlobalData> {
 		if (!this._globalDataCache) {
 			debugCache("retrieving global data...");

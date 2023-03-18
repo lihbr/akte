@@ -3,6 +3,7 @@ import { type Awaitable } from "./types";
 
 import { createDebugger } from "./lib/createDebugger";
 import { pathToFilePath } from "./lib/pathToFilePath";
+import { toReadonlyMap } from "./lib/toReadonlyMap";
 
 /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports */
 
@@ -186,14 +187,25 @@ export class AkteFiles<
 		this._bulkDataCache = undefined;
 	}
 
-	// TODO: TSDocs + freeze map(?)
-	get dataMapCache(): Map<string, Awaitable<TData>> {
-		return this._dataMapCache;
+	/**
+	 * Readonly cache of files' definition `data` method.
+	 *
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
+	get dataMapCache(): ReadonlyMap<string, Awaitable<TData>> {
+		return toReadonlyMap(this._dataMapCache);
 	}
 
 	private _dataMapCache: Map<string, Awaitable<TData>> = new Map();
 
-	// TODO: TSDocs
+	/**
+	 * Retrieves data from files' definition `data` method with given context.
+	 *
+	 * @param context - Context to get data with.
+	 * @returns Retrieved data.
+	 * @remark Returned data may come from cache.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	getData: FilesDataFn<TGlobalData, TParams, TData> = (context) => {
 		const maybePromise = this._dataMapCache.get(context.path);
 		if (maybePromise) {
@@ -242,14 +254,25 @@ export class AkteFiles<
 		return promise;
 	};
 
-	// TODO: TSDocs
+	/**
+	 * Readonly cache of files' definition `bulkData` method.
+	 *
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	get bulkDataCache(): Awaitable<Record<string, TData>> | undefined {
 		return this._bulkDataCache;
 	}
 
 	private _bulkDataCache: Awaitable<Record<string, TData>> | undefined;
 
-	// TODO: TSDocs
+	/**
+	 * Retrieves data from files' definition `bulkData` method with given context.
+	 *
+	 * @param context - Context to get bulk data with.
+	 * @returns Retrieved bulk data.
+	 * @remark Returned bulk data may come from cache.
+	 * @experimental Programmatic API might still change not following SemVer.
+	 */
 	getBulkData: FilesBulkDataFn<TGlobalData, TData> = (context) => {
 		if (!this._bulkDataCache) {
 			debugCache("retrieving bulk data... %o", this.path);
