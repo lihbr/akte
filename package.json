@@ -47,8 +47,8 @@
 		"dev": "vite build --watch",
 		"format": "prettier --write .",
 		"prepare": "npm run build",
-		"release": "npm run test && standard-version --release-as minor && git push --follow-tags && npm run build && npm publish",
-		"release:dry": "standard-version --release-as minor --dry-run",
+		"release": "npm run test && standard-version --release-as patch && git push --follow-tags && npm run build && npm publish",
+		"release:dry": "standard-version --release-as patch --dry-run",
 		"release:alpha": "npm run test && standard-version --release-as major --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
 		"release:alpha:dry": "standard-version --release-as major --prerelease alpha --dry-run",
 		"lint": "eslint --ext .js,.ts .",
@@ -68,7 +68,7 @@
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@types/html-minifier-terser": "^7.0.0",
 		"@types/http-proxy": "^1.17.10",
-		"@vitest/coverage-c8": "^0.29.2",
+		"@vitest/coverage-c8": "^0.29.3",
 		"eslint": "^8.36.0",
 		"eslint-config-prettier": "^8.7.0",
 		"eslint-plugin-prettier": "^4.2.1",
@@ -80,9 +80,9 @@
 		"size-limit": "^8.2.4",
 		"standard-version": "^9.5.0",
 		"typescript": "^4.9.5",
-		"vite": "^4.1.4",
+		"vite": "^4.2.0",
 		"vite-plugin-sdk": "^0.1.1",
-		"vitest": "^0.29.2"
+		"vitest": "^0.29.3"
 	},
 	"peerDependencies": {
 		"html-minifier-terser": "^7.0.0",
