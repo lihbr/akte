@@ -31,7 +31,7 @@ export class AkteViteCache {
 
 	async setAppGlobalData(globalData: unknown): Promise<void> {
 		// Updating global data invalidates all cache
-		await rm(this._dir.data, { recursive: true });
+		await rm(this._dir.data, { recursive: true, force: true });
 
 		const globalDataRaw = JSON.stringify({ globalData });
 

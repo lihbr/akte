@@ -99,10 +99,10 @@ export const buildPlugin = <TGlobalData>(
 			if (env.mode === "development") {
 				debug("caching globalData, bulkData, and data...");
 
-				const cachingPromises: Promise<void>[] = [];
-
 				const globalData = await options.app.globalDataCache;
-				cachingPromises.push(cache.setAppGlobalData(globalData));
+				await cache.setAppGlobalData(globalData);
+
+				const cachingPromises: Promise<void>[] = [];
 
 				for (const file of options.app.files) {
 					cachingPromises.push(cache.setFileDataMap(file));
