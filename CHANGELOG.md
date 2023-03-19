@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/lihbr/akte/compare/v0.3.0...v0.3.1) (2023-03-19)
+
+
+### Bug Fixes
+
+* **vite:** consistently invalidate cache directory ([c9d35f0](https://github.com/lihbr/akte/commit/c9d35f0bac99523210b570135af7ca844e3d6341))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([e5e9e33](https://github.com/lihbr/akte/commit/e5e9e330557c3fc07d0e001512d61214901161b5))
+
 ## [0.3.0](https://github.com/lihbr/akte/compare/v0.2.0...v0.3.0) (2023-03-18)
 
 
