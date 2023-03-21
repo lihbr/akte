@@ -163,7 +163,7 @@ export const buildPlugin = <TGlobalData>(
 				) {
 					// Rewrite filename to be neither relative or absolute
 					bundle.fileName = bundle.fileName.replace(
-						new RegExp(`^${options.cacheDir}\\/?`),
+						new RegExp(`^${options.cacheDir}\\/render\\/?`),
 						"",
 					);
 
