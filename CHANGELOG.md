@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/lihbr/akte/compare/v0.3.1...v0.3.2) (2023-03-21)
+
+
+### Bug Fixes
+
+* **vite:** bundle filename renaming ([c2f80f6](https://github.com/lihbr/akte/commit/c2f80f6aa58ec6dc768b984381eb86e5f2587ecd))
+* **vite:** wait for server to reload before sending revalidation event ([fb6cb61](https://github.com/lihbr/akte/commit/fb6cb613b0b0a3463882d4eee5370c8488624db9))
+
 ### [0.3.1](https://github.com/lihbr/akte/compare/v0.3.0...v0.3.1) (2023-03-19)
 
 
