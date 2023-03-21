@@ -57,6 +57,11 @@ export const serverPlugin = <TGlobalData>(
 				// Current global data is needed for both revalidation
 				const currentGlobalData = await options.app.getGlobalData();
 
+				const fullReload = () => {
+					server.ws.off("connection", fullReload);
+					server.ws.send({ type: "full-reload" });
+				};
+
 				// Revalidate global data if cache was used
 				if (match.globalData) {
 					const previousGlobalDataString = JSON.stringify(match.globalData);
@@ -67,7 +72,9 @@ export const serverPlugin = <TGlobalData>(
 
 						await cache.setAppGlobalData(currentGlobalData);
 
-						return server.ws.send({ type: "full-reload" });
+						server.ws.on("connection", fullReload);
+
+						return;
 					}
 				}
 
@@ -87,7 +94,7 @@ export const serverPlugin = <TGlobalData>(
 
 						await cache.setFileData(match.path, currentData);
 
-						return server.ws.send({ type: "full-reload" });
+						server.ws.on("connection", fullReload);
 					}
 				}
 			};
@@ -144,7 +151,7 @@ export const serverPlugin = <TGlobalData>(
 
 				// Revalidate cache on non-fetch requests if cache was used
 				if (
-					req.headers["sec-fetch-dest"] === "empty" &&
+					req.headers["sec-fetch-dest"] === "document" &&
 					(match.globalData || match.data)
 				) {
 					revalidateCache(match);

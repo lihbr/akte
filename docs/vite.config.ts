@@ -35,7 +35,7 @@ export default defineConfig({
 			name: "markdown:watch",
 			configureServer(server) {
 				// Hot reload on Markdown updates
-				server.watcher.add("content/**.md");
+				server.watcher.add("content");
 				server.watcher.on("change", (path) => {
 					if (path.endsWith(".md")) {
 						app.clearCache(true);
