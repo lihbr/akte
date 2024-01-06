@@ -14,7 +14,11 @@ import rehypeToc from "rehype-toc";
 import rehypeStringify from "rehype-stringify";
 
 import { common, createStarryNight } from "@wooorm/starry-night";
+
+// @ts-expect-error - Cannot resolve type
 import ignoreGrammar from "@wooorm/starry-night/source.gitignore";
+
+// @ts-expect-error - Cannot resolve type
 import tsxGrammar from "@wooorm/starry-night/source.tsx";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
@@ -66,7 +70,7 @@ const rehypeStarryNight: Plugin<[], HRoot> = () => {
 			const scope = starryNight.flagToScope(language.slice(prefix.length));
 
 			// Maybe warn?
-			if (!scope) {
+			if (!scope || !index) {
 				return;
 			}
 
@@ -90,7 +94,8 @@ const rehypeStarryNight: Plugin<[], HRoot> = () => {
 	};
 };
 
-let processor: Processor;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let processor: Processor<any, any, any, any, string>;
 
 export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 	markdown: string,
@@ -108,56 +113,65 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 			})
 			.use(remarkDirective)
 			.use(() => (tree: MDRoot) => {
-				visit(tree, (node) => {
-					if (
-						node.type === "textDirective" ||
-						node.type === "leafDirective" ||
-						node.type === "containerDirective"
-					) {
-						if (node.name === "callout") {
-							const data = node.data || (node.data = {});
-							const tagName =
-								node.type === "textDirective" ? "span" : "article";
-							const properties =
-								h(tagName, node.attributes as Record<string, string>)
-									.properties || {};
-							properties.className ||= [];
-							(properties.className as string[]).push("callout");
+				visit(
+					tree,
+					(node: {
+						type: string;
+						name?: string;
+						data?: Record<string, unknown>;
+						attributes?: Record<string, string>;
+						children?: Content[];
+					}) => {
+						if (
+							node.type === "textDirective" ||
+							node.type === "leafDirective" ||
+							node.type === "containerDirective"
+						) {
+							if (node.name === "callout") {
+								const data = node.data || (node.data = {});
+								const tagName =
+									node.type === "textDirective" ? "span" : "article";
+								const properties =
+									h(tagName, node.attributes as Record<string, string>)
+										.properties || {};
+								properties.className ||= [];
+								(properties.className as string[]).push("callout");
 
-							const icon = properties.icon as string | undefined;
-							delete properties.icon;
-							const title = properties.title as string | undefined;
-							delete properties.title;
-							const level = properties.level as
-								| 1
-								| 2
-								| 3
-								| 4
-								| 5
-								| 6
-								| undefined;
-							delete properties.level;
+								const icon = properties.icon as string | undefined;
+								delete properties.icon;
+								const title = properties.title as string | undefined;
+								delete properties.title;
+								const level = properties.level as
+									| 1
+									| 2
+									| 3
+									| 4
+									| 5
+									| 6
+									| undefined;
+								delete properties.level;
 
-							if (icon) {
-								properties.dataIcon = icon;
+								if (icon) {
+									properties.dataIcon = icon;
+								}
+
+								const children = node.children || [];
+								if (title) {
+									children.unshift({
+										type: "heading",
+										depth: level || 4,
+										children: [{ type: "text", value: title }],
+									});
+								}
+
+								data.hName = tagName;
+								data.hProperties = properties;
+								// @ts-expect-error I don't know how to straighten that :'(
+								node.children = [{ type: "div", children }];
 							}
-
-							const children = node.children as Content[];
-							if (title) {
-								children.unshift({
-									type: "heading",
-									depth: level || 4,
-									children: [{ type: "text", value: title }],
-								});
-							}
-
-							data.hName = tagName;
-							data.hProperties = properties;
-							// @ts-expect-error I don't know how to straighten that :'(
-							node.children = [{ type: "div", children }];
 						}
-					}
-				});
+					},
+				);
 			})
 			.use(remarkRehype, { allowDangerousHtml: true })
 
@@ -203,6 +217,7 @@ export const markdownToHTML = async <TMatter extends Record<string, unknown>>(
 										value: "Table of Contents",
 									},
 								],
+								properties: {},
 							});
 
 							return;
