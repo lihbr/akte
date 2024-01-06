@@ -108,21 +108,21 @@ it("throws `NotFoundError` on unknown path", () => {
 	}
 
 	expect(() => app.lookup("/foo")).toThrowErrorMatchingInlineSnapshot(
-		'"Could lookup file for path `/foo`"',
+		`[Error: Could lookup file for path \`/foo\`]`,
 	);
 	expect(() => app.lookup("/foo.png")).toThrowErrorMatchingInlineSnapshot(
-		'"Could lookup file for path `/foo.png`"',
+		`[Error: Could lookup file for path \`/foo.png\`]`,
 	);
 	expect(() => app.lookup("/posts/foo.png")).toThrowErrorMatchingInlineSnapshot(
-		'"Could lookup file for path `/posts/foo.png`"',
+		`[Error: Could lookup file for path \`/posts/foo.png\`]`,
 	);
 	expect(() => app.lookup("/posts/foo/bar")).toThrowErrorMatchingInlineSnapshot(
-		'"Could lookup file for path `/posts/foo/bar`"',
+		`[Error: Could lookup file for path \`/posts/foo/bar\`]`,
 	);
 	expect(() =>
 		app.lookup("/pages/foo/bar.png"),
 	).toThrowErrorMatchingInlineSnapshot(
-		'"Could lookup file for path `/pages/foo/bar.png`"',
+		`[Error: Could lookup file for path \`/pages/foo/bar.png\`]`,
 	);
 
 	expect.assertions(6);

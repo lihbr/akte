@@ -17,10 +17,10 @@ type Path<
 > = TParams extends []
 	? ""
 	: TParams extends [string]
-	? `${TPrefix}:${TParams[0]}${string}`
-	: TParams extends readonly [string, ...infer Rest extends string[]]
-	? Path<Rest, `${TPrefix}:${TParams[0]}${string}`>
-	: string;
+		? `${TPrefix}:${TParams[0]}${string}`
+		: TParams extends readonly [string, ...infer Rest extends string[]]
+			? Path<Rest, `${TPrefix}:${TParams[0]}${string}`>
+			: string;
 
 /**
  * A function responsible for fetching the data required to render a given file
@@ -118,7 +118,11 @@ export class AkteFiles<
 		debug("defined %o", this.path);
 	}
 
-	/** @internal Prefer {@link AkteApp.render} or use at your own risks. */
+	/**
+	 * Prefer {@link AkteApp.render} or use at your own risks.
+	 *
+	 *  @internal
+	 */
 	async render(args: {
 		path: string;
 		params: Record<TParams[number], string>;
@@ -134,7 +138,11 @@ export class AkteFiles<
 		});
 	}
 
-	/** @internal Prefer {@link AkteApp.renderAll} or use at your own risks. */
+	/**
+	 * Prefer {@link AkteApp.renderAll} or use at your own risks.
+	 *
+	 * @internal
+	 */
 	async renderAll(args: {
 		globalData: TGlobalData;
 	}): Promise<Record<string, string>> {
@@ -181,7 +189,11 @@ export class AkteFiles<
 		return Object.fromEntries(fileEntries);
 	}
 
-	/** @internal Prefer {@link AkteApp.clearCache} or use at your own risks. */
+	/**
+	 * Prefer {@link AkteApp.clearCache} or use at your own risks.
+	 *
+	 * @internal
+	 */
 	clearCache(): void {
 		this._dataMapCache.clear();
 		this._bulkDataCache = undefined;

@@ -18,6 +18,8 @@ module.exports = {
 			"error",
 			{ argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
 		],
+		"antfu/top-level-function": "off",
+		"n/prefer-global/process": "off",
 		"no-cond-assign": ["error", "except-parens"],
 		"no-fallthrough": "off",
 		"padding-line-between-statements": [

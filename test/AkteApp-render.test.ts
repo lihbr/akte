@@ -15,25 +15,25 @@ const app = defineAkteApp({
 
 it("renders matched path", async () => {
 	await expect(app.render(app.lookup("/"))).resolves.toMatchInlineSnapshot(
-		'"Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}"',
+		`"Rendered: {"path":"/","data":"index"}"`,
 	);
 	await expect(app.render(app.lookup("/about"))).resolves.toMatchInlineSnapshot(
-		'"Rendered: {\\"path\\":\\"/about\\"}"',
+		`"Rendered: {"path":"/about"}"`,
 	);
 	await expect(
 		app.render(app.lookup("/posts/foo")),
 	).resolves.toMatchInlineSnapshot(
-		'"Rendered: {\\"path\\":\\"/posts/foo\\",\\"data\\":\\"foo\\"}"',
+		`"Rendered: {"path":"/posts/foo","data":"foo"}"`,
 	);
 	await expect(
 		app.render(app.lookup("/pages/foo/bar")),
 	).resolves.toMatchInlineSnapshot(
-		'"Rendered: {\\"path\\":\\"/pages/foo/bar\\",\\"data\\":\\"foo bar\\"}"',
+		`"Rendered: {"path":"/pages/foo/bar","data":"foo bar"}"`,
 	);
 	await expect(
 		app.render(app.lookup("/foo.json")),
 	).resolves.toMatchInlineSnapshot(
-		'"Rendered: {\\"path\\":\\"/foo.json\\",\\"data\\":\\"foo\\"}"',
+		`"Rendered: {"path":"/foo.json","data":"foo"}"`,
 	);
 });
 

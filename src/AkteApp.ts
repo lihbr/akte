@@ -52,7 +52,7 @@ export type Config<TGlobalData> = {
 			 * The return value of this function is then shared with each Akte file.
 			 */
 			globalData: GlobalDataFn<TGlobalData>;
-	  }
+		}
 	: {
 			/**
 			 * Global data retrieval function.
@@ -60,7 +60,7 @@ export type Config<TGlobalData> = {
 			 * The return value of this function is then shared with each Akte file.
 			 */
 			globalData?: GlobalDataFn<TGlobalData>;
-	  });
+		});
 
 const debug = createDebugger("akte:app");
 const debugWrite = createDebugger("akte:app:write");
@@ -103,7 +103,7 @@ export class AkteApp<TGlobalData = unknown> {
 	 * @param path - Path to lookup, e.g. "/foo"
 	 * @returns A match featuring the path, the path parameters if any, and the
 	 *   Akte file.
-	 * @throws {@link NotFoundError} When no Akte file is found for handling
+	 * @throws a {@link NotFoundError} when no Akte file is found for handling
 	 *   looked up path.
 	 * @experimental Programmatic API might still change not following SemVer.
 	 */
@@ -131,7 +131,7 @@ export class AkteApp<TGlobalData = unknown> {
 	 *
 	 * @param match - Match to render.
 	 * @returns Rendered file.
-	 * @throws {@link NotFoundError} When the Akte file could not render the match
+	 * @throws a {@link NotFoundError} when the Akte file could not render the match
 	 *   (404), with an optional `cause` attached to it for uncaught errors (500)
 	 * @experimental Programmatic API might still change not following SemVer.
 	 */
@@ -227,7 +227,9 @@ export class AkteApp<TGlobalData = unknown> {
 	 * Writes a map of rendered Akte files to the specified `outDir`, or the app
 	 * specified one (defaults to `"dist"`).
 	 *
-	 * @param args - A map of rendered Akte files, and an optional `outDir`
+	 * @param args
+	 * @param args.files - A map of rendered Akte files
+	 * @param args.outDir - An optional `outDir`
 	 * @experimental Programmatic API might still change not following SemVer.
 	 */
 	async writeAll(args: {
@@ -283,7 +285,8 @@ export class AkteApp<TGlobalData = unknown> {
 	 * Build (renders and write) all Akte files to the specified `outDir`, or the
 	 * app specified one (defaults to `"dist"`).
 	 *
-	 * @param args - An optional `outDir`
+	 * @param args
+	 * @param args.outDir - An optional `outDir`
 	 * @returns Built files array.
 	 * @experimental Programmatic API might still change not following SemVer.
 	 */
@@ -330,7 +333,6 @@ export class AkteApp<TGlobalData = unknown> {
 	/**
 	 * Retrieves data from the app's definition `globalData` method.
 	 *
-	 * @param context - Context to get global data with.
 	 * @returns Retrieved global data.
 	 * @remark Returned global data may come from cache.
 	 * @experimental Programmatic API might still change not following SemVer.

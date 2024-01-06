@@ -39,4 +39,4 @@ export const akteWelcome = __PRODUCTION__
 			render(context) {
 				return context.data.html;
 			},
-	  });
+		});

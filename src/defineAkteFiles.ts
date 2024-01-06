@@ -45,17 +45,17 @@ export const defineAkteFiles = <
 		_TGlobalData extends TGlobalData,
 		_TParams extends TParams extends Empty
 			? _TDataFn extends FilesDataFn<_TGlobalData, string[], unknown>
-				? Exclude<keyof Parameters<_TDataFn>[0]["params"], Symbol | number>[]
+				? Exclude<keyof Parameters<_TDataFn>[0]["params"], symbol | number>[]
 				: string[]
 			: TParams,
 		_TData extends TData extends Empty
 			? _TDataFn extends FilesDataFn<_TGlobalData, string[], unknown>
 				? Awaited<ReturnType<_TDataFn>>
 				: _TBulkDataFn extends FilesBulkDataFn<_TGlobalData, unknown>
-				? Awaited<ReturnType<_TBulkDataFn>>[keyof Awaited<
-						ReturnType<_TBulkDataFn>
-				  >]
-				: undefined
+					? Awaited<ReturnType<_TBulkDataFn>>[keyof Awaited<
+							ReturnType<_TBulkDataFn>
+						>]
+					: undefined
 			: TData,
 		_TDataFn extends FilesDataFn<_TGlobalData, string[], unknown> | undefined,
 		_TBulkDataFn extends _TDataFn extends FilesDataFn<

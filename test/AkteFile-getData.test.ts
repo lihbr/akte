@@ -65,6 +65,6 @@ it("throws when neither data and bulk data are implemented", () => {
 	expect(() =>
 		files.getData({ path: "/foo", params: {}, globalData: {} }),
 	).toThrowErrorMatchingInlineSnapshot(
-		'"Cannot render file for path `/foo`, no `data` or `bulkData` function available"',
+		`[Error: Cannot render file for path \`/foo\`, no \`data\` or \`bulkData\` function available]`,
 	);
 });

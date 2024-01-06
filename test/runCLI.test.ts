@@ -26,17 +26,17 @@ it("builds product upon build command", async () => {
 
 	expect(vol.toJSON()).toMatchInlineSnapshot(`
 		{
-		  "/foo/about.html": "Rendered: {\\"path\\":\\"/about\\",\\"data\\":{}}",
-		  "/foo/bar.json": "Rendered: {\\"path\\":\\"/bar.json\\",\\"data\\":\\"bar\\"}",
-		  "/foo/baz.json": "Rendered: {\\"path\\":\\"/baz.json\\",\\"data\\":\\"bar\\"}",
-		  "/foo/foo.json": "Rendered: {\\"path\\":\\"/foo.json\\",\\"data\\":\\"foo\\"}",
-		  "/foo/index.html": "Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}",
-		  "/foo/pages/foo.html": "Rendered: {\\"path\\":\\"/pages/foo\\",\\"data\\":\\"foo\\"}",
-		  "/foo/pages/foo/bar.html": "Rendered: {\\"path\\":\\"/pages/foo/bar\\",\\"data\\":\\"foo bar\\"}",
-		  "/foo/pages/foo/bar/baz.html": "Rendered: {\\"path\\":\\"/pages/foo/bar/baz\\",\\"data\\":\\"foo bar baz\\"}",
-		  "/foo/posts/bar.html": "Rendered: {\\"path\\":\\"/posts/bar\\",\\"data\\":\\"bar\\"}",
-		  "/foo/posts/baz.html": "Rendered: {\\"path\\":\\"/posts/baz\\",\\"data\\":\\"bar\\"}",
-		  "/foo/posts/foo.html": "Rendered: {\\"path\\":\\"/posts/foo\\",\\"data\\":\\"foo\\"}",
+		  "/foo/about.html": "Rendered: {"path":"/about","data":{}}",
+		  "/foo/bar.json": "Rendered: {"path":"/bar.json","data":"bar"}",
+		  "/foo/baz.json": "Rendered: {"path":"/baz.json","data":"bar"}",
+		  "/foo/foo.json": "Rendered: {"path":"/foo.json","data":"foo"}",
+		  "/foo/index.html": "Rendered: {"path":"/","data":"index"}",
+		  "/foo/pages/foo.html": "Rendered: {"path":"/pages/foo","data":"foo"}",
+		  "/foo/pages/foo/bar.html": "Rendered: {"path":"/pages/foo/bar","data":"foo bar"}",
+		  "/foo/pages/foo/bar/baz.html": "Rendered: {"path":"/pages/foo/bar/baz","data":"foo bar baz"}",
+		  "/foo/posts/bar.html": "Rendered: {"path":"/posts/bar","data":"bar"}",
+		  "/foo/posts/baz.html": "Rendered: {"path":"/posts/baz","data":"bar"}",
+		  "/foo/posts/foo.html": "Rendered: {"path":"/posts/foo","data":"foo"}",
 		}
 	`);
 

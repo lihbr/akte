@@ -17,17 +17,17 @@ it("renders all files", async () => {
 
 	await expect(app.renderAll()).resolves.toMatchInlineSnapshot(`
 		{
-		  "/about.html": "Rendered: {\\"path\\":\\"/about\\",\\"data\\":{}}",
-		  "/bar.json": "Rendered: {\\"path\\":\\"/bar.json\\",\\"data\\":\\"bar\\"}",
-		  "/baz.json": "Rendered: {\\"path\\":\\"/baz.json\\",\\"data\\":\\"bar\\"}",
-		  "/foo.json": "Rendered: {\\"path\\":\\"/foo.json\\",\\"data\\":\\"foo\\"}",
-		  "/index.html": "Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}",
-		  "/pages/foo.html": "Rendered: {\\"path\\":\\"/pages/foo\\",\\"data\\":\\"foo\\"}",
-		  "/pages/foo/bar.html": "Rendered: {\\"path\\":\\"/pages/foo/bar\\",\\"data\\":\\"foo bar\\"}",
-		  "/pages/foo/bar/baz.html": "Rendered: {\\"path\\":\\"/pages/foo/bar/baz\\",\\"data\\":\\"foo bar baz\\"}",
-		  "/posts/bar.html": "Rendered: {\\"path\\":\\"/posts/bar\\",\\"data\\":\\"bar\\"}",
-		  "/posts/baz.html": "Rendered: {\\"path\\":\\"/posts/baz\\",\\"data\\":\\"bar\\"}",
-		  "/posts/foo.html": "Rendered: {\\"path\\":\\"/posts/foo\\",\\"data\\":\\"foo\\"}",
+		  "/about.html": "Rendered: {"path":"/about","data":{}}",
+		  "/bar.json": "Rendered: {"path":"/bar.json","data":"bar"}",
+		  "/baz.json": "Rendered: {"path":"/baz.json","data":"bar"}",
+		  "/foo.json": "Rendered: {"path":"/foo.json","data":"foo"}",
+		  "/index.html": "Rendered: {"path":"/","data":"index"}",
+		  "/pages/foo.html": "Rendered: {"path":"/pages/foo","data":"foo"}",
+		  "/pages/foo/bar.html": "Rendered: {"path":"/pages/foo/bar","data":"foo bar"}",
+		  "/pages/foo/bar/baz.html": "Rendered: {"path":"/pages/foo/bar/baz","data":"foo bar baz"}",
+		  "/posts/bar.html": "Rendered: {"path":"/posts/bar","data":"bar"}",
+		  "/posts/baz.html": "Rendered: {"path":"/posts/baz","data":"bar"}",
+		  "/posts/foo.html": "Rendered: {"path":"/posts/foo","data":"foo"}",
 		}
 	`);
 });
@@ -62,7 +62,7 @@ it("deduplicates and warns about duplicate files", async () => {
 
 	await expect(app.renderAll()).resolves.toMatchInlineSnapshot(`
 		{
-		  "/index.html": "Rendered: {\\"path\\":\\"/\\",\\"data\\":\\"index\\"}",
+		  "/index.html": "Rendered: {"path":"/","data":"index"}",
 		}
 	`);
 });
