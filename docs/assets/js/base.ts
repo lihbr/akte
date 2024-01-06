@@ -14,12 +14,12 @@ type Event<
 			event: TType;
 			props?: Record<string, never>;
 			data?: Record<string, unknown>;
-	  }
+		}
 	: {
 			event: TType;
 			props: TProps;
 			data?: Record<string, unknown>;
-	  };
+		};
 
 type PageViewEvent = Event<"pageView">;
 type OutboundLinkClickEvent = Event<"outboundLink:click", { url: string }>;

@@ -14,8 +14,8 @@ import rehypeToc from "rehype-toc";
 import rehypeStringify from "rehype-stringify";
 
 import { common, createStarryNight } from "@wooorm/starry-night";
-import ignoreGrammar from "@wooorm/starry-night/lang/source.gitignore";
-import tsxGrammar from "@wooorm/starry-night/lang/source.tsx";
+import ignoreGrammar from "@wooorm/starry-night/source.gitignore";
+import tsxGrammar from "@wooorm/starry-night/source.tsx";
 import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";

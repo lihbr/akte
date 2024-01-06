@@ -1,5 +1,5 @@
 @import "@fontsource/ibm-plex-sans";
-@import "@wooorm/starry-night/style/both.css";
+@import "@wooorm/starry-night/style/both";
 
 @import "./properties";
 @import "./defaults";
