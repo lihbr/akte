@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/lihbr/akte/compare/v0.4.0...v0.4.1) (2024-05-09)
+
+
+### Documentation
+
+* typo ([28ff1d8](https://github.com/lihbr/akte/commit/28ff1d8e206e88d91353196b9d04fce72f6eb912))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([8106724](https://github.com/lihbr/akte/commit/810672435ef0a5590ada9e231d5d0391d386b4c3))
+
 ## [0.4.0](https://github.com/lihbr/akte/compare/v0.3.2...v0.4.0) (2024-01-06)
 
 
