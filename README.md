@@ -14,7 +14,7 @@
 [![License][license-src]][license-href]
 
 > **Warning**
-> Akte is in active development, it's usable, however, consider pinning the patch version before using.
+> Akte is still pre-major (pre-1.0.0), it's usable, however, consider pinning the patch version before using.
 
 A minimal static site (and file) generator.
 

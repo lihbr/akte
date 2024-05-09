@@ -9,7 +9,7 @@
 	},
 	"devDependencies": {
 		"akte": "latest",
-		"html-minifier-terser": "^7.1.0",
-		"vite": "^4.1.4"
+		"html-minifier-terser": "^7.2.0",
+		"vite": "^5.2.11"
 	}
 }

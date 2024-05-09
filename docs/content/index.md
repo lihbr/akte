@@ -5,8 +5,8 @@ toc: false
 
 # Akte
 
-:::callout{icon=⚠ title="In active development"}
-Akte is in active development, it's usable (this website is built with Akte), however, consider pinning the patch version before using.
+:::callout{icon=⚠ title="Pre-major"}
+Akte is still pre-major (pre-1.0.0), it's usable (this website is built with Akte), however, consider pinning the patch version before using.
 :::
 
 A minimal static site (and file) generator.
