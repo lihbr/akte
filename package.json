@@ -1,7 +1,7 @@
 {
 	"name": "akte",
 	"type": "module",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"description": "A minimal static site (and file) generator",
 	"author": "Lucie Haberer <hello@lihbr.com> (https://lihbr.com)",
 	"license": "MIT",
