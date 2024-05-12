@@ -2,6 +2,7 @@ module.exports = {
 	root: true,
 	extends: ["@antfu", "plugin:prettier/recommended"],
 	rules: {
+		"jsonc/indent": ["error", "tab"],
 		"@typescript-eslint/consistent-type-imports": [
 			"error",
 			{
