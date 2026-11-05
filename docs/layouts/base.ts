@@ -46,7 +46,6 @@ export const base = (
 	</head>
 	<body>
 		${slot}
-		<script type="module" src="/assets/js/base.ts"></script>
 	</body>
 </html>`;
 };
