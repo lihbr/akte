@@ -47,10 +47,6 @@ export default defineConfig({
 					`href="/assets`,
 					`href="${docURL}/assets`,
 				);
-				welcomePage = welcomePage.replace(
-					/(src="\/assets\/js\/\w+?)\.ts/g,
-					"$1.js",
-				);
 
 				welcomePage = await minify(welcomePage, MINIFY_HTML_OPTIONS);
 
